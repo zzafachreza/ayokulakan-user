@@ -124,14 +124,14 @@ export default function Hijrah() {
               uri: 'https://ayokulakan.com/img/pilihan/hijrah-tentang.jpg',
             }}
             title="Tentang Haji & Umroh"
-            onPress={() => navigation.navigate('Zakat')}
+            onPress={() => navigation.navigate('HajiTentang')}
           />
           <IconHijrah
             images={{
               uri: 'https://ayokulakan.com/img/pilihan/hijrah-daftar.jpg',
             }}
             title="Daftar Haji & Umroh"
-            onPress={() => navigation.navigate('Quran')}
+            onPress={() => navigation.navigate('HajiDaftar')}
           />
           <IconHijrah
             images={{

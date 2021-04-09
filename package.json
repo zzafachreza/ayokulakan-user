@@ -53,6 +53,7 @@
     "react-native-snap-carousel": "^3.9.1",
     "react-native-sound": "^0.11.0",
     "react-native-tab-view": "^2.15.2",
+    "react-native-unordered-list": "^1.0.4",
     "react-native-vector-icons": "^7.1.0",
     "react-native-webview": "^11.2.3",
     "react-redux": "^7.2.2",

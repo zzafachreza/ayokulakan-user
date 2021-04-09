@@ -47,6 +47,8 @@ import {
   Pulsa,
   PulsaDetail,
   Hadits,
+  HajiTentang,
+  HajiDaftar,
 } from '../pages';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigator} from '../components';
@@ -104,7 +106,7 @@ export default function Router() {
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
   return (
-    <Stack.Navigator initialRouteName={'Splash'}>
+    <Stack.Navigator initialRouteName={'HajiDaftar'}>
       <Stack.Screen
         name="Splash"
         component={Splash}
@@ -152,6 +154,32 @@ export default function Router() {
         component={Quran}
         options={{
           headerShown: false,
+        }}
+      />
+
+      <Stack.Screen
+        name="HajiTentang"
+        component={HajiTentang}
+        options={{
+          headerTitle: 'TENTANG HAJI & UMROH',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#16A858',
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="HajiDaftar"
+        component={HajiDaftar}
+        options={{
+          headerTitle: 'DAFTAR HAJI & UMROH',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#16A858',
+            elevation: 0, // remove shadow on Android
+          },
         }}
       />
 

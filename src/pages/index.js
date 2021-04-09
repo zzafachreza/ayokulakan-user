@@ -39,6 +39,7 @@ import Pulsa from './Pulsa';
 import PulsaDetail from './PulsaDetail';
 import Hadits from './Hadits';
 import HajiTentang from './HajiTentang';
+import HajiDaftar from './HajiDaftar';
 
 export {
   Splash,
@@ -80,4 +81,5 @@ export {
   PulsaDetail,
   Hadits,
   HajiTentang,
+  HajiDaftar,
 };
