@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,12 +6,159 @@ import {
   SafeAreaView,
   Image,
   ScrollView,
+  useWindowDimensions,
+  TouchableOpacity,
 } from 'react-native';
 import Unorderedlist from 'react-native-unordered-list';
-import {fonts, colors} from '../../utils';
-import {ScrollPager} from 'react-native-tab-view';
+import {fonts, colors, getData} from '../../utils';
+import {MyInput, MyGap, MyButton} from '../../components';
+import DropDownPicker from 'react-native-dropdown-picker';
+import HTML from 'react-native-render-html';
+import axios from 'axios';
+import ImagePicker from 'react-native-image-picker';
+import RNFetchBlob from 'rn-fetch-blob';
+import {useDispatch, useSelector} from 'react-redux';
+import {setForm, setLoading, setMessege, setUsers} from '../../redux';
 
-export default function HajiDaftar() {
+export default function HajiDaftar({navigation}) {
+  const [user, setUser] = useState({});
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getData('users').then((res) => {
+      console.log(res);
+
+      if (!res) {
+        alert('Anda Harus Login Terlebih dahulu !');
+        navigation.navigate('Account');
+      } else {
+        setUser(res);
+        setDataKirim({
+          ...dataKirim,
+          user_id: res.id,
+        });
+      }
+    });
+    getDataAll();
+  }, []);
+
+  const [dataKirim, setDataKirim] = useState({
+    user_id: '',
+    name: '',
+    id_paket: '',
+    id_jadwal: '',
+    nik: '',
+    kk: '',
+    keterangan_penyakit: '',
+    passport: '',
+  });
+
+  const daftar = () => {
+    dispatch(setLoading(true));
+    setTimeout(() => {
+      console.log(dataKirim);
+      dispatch(setLoading(false));
+      navigation.replace('MainApp');
+      alert('Anda berhasil mendaftar !');
+    }, 1500);
+  };
+
+  const contentWidth = useWindowDimensions().width;
+  const [itemSelected, setItemSelected] = useState([]);
+  const [itemOK, setItemOK] = useState(false);
+
+  const [foto1, setfoto1] = useState(
+    'https://ayokulakan.com/img/no-images.png',
+  );
+  const [foto2, setfoto2] = useState(
+    'https://ayokulakan.com/img/no-images.png',
+  );
+  const [foto3, setfoto3] = useState(
+    'https://ayokulakan.com/img/no-images.png',
+  );
+  const [foto4, setfoto4] = useState(
+    'https://ayokulakan.com/img/no-images.png',
+  );
+  const [foto5, setfoto5] = useState(
+    'https://ayokulakan.com/img/no-images.png',
+  );
+  const [foto6, setfoto6] = useState(
+    'https://ayokulakan.com/img/no-images.png',
+  );
+  const [foto7, setfoto7] = useState(
+    'https://ayokulakan.com/img/no-images.png',
+  );
+  const [foto8, setfoto8] = useState(
+    'https://ayokulakan.com/img/no-images.png',
+  );
+
+  const options = {
+    title: 'Ayokulakan',
+    takePhotoButtonTitle: 'Ambil foto dengan kamera',
+    chooseFromLibraryButtonTitle: 'Ambil foto dari galeri',
+  };
+
+  const getUpload = (xyz) => {
+    ImagePicker.showImagePicker(options, (response) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('Image Picker Error: ', response.error);
+      } else {
+        let source = {uri: response.uri};
+
+        switch (xyz) {
+          case 1:
+            setfoto1(`data:${response.type};base64, ${response.data}`);
+            break;
+          case 2:
+            setfoto2(`data:${response.type};base64, ${response.data}`);
+            break;
+          case 3:
+            setfoto3(`data:${response.type};base64, ${response.data}`);
+            break;
+          case 4:
+            setfoto4(`data:${response.type};base64, ${response.data}`);
+            break;
+          case 5:
+            setfoto5(`data:${response.type};base64, ${response.data}`);
+            break;
+          case 6:
+            setfoto6(`data:${response.type};base64, ${response.data}`);
+            break;
+          case 7:
+            setfoto7(`data:${response.type};base64, ${response.data}`);
+            break;
+          case 8:
+            setfoto8(`data:${response.type};base64, ${response.data}`);
+            break;
+        }
+      }
+    });
+  };
+
+  const getDataAll = () => {
+    axios
+      .get('https://ayokulakan.com/api/hajiumroh/haji-jadwal?limit=0')
+      .then((res) => {
+        const dataOld = res.data.data;
+        const data = [];
+        Object.keys(dataOld).map((key) => {
+          data.push({
+            label: dataOld[key].judul,
+            value: dataOld[key],
+          });
+        });
+
+        console.log(data);
+        setDataPaket(data);
+      });
+  };
+
+  const [dataPaket, setDataPaket] = useState([]);
+
   const OrderList = ({no, isi, left}) => {
     return (
       <View
@@ -25,6 +172,33 @@ export default function HajiDaftar() {
           </Text>
         </View>
       </View>
+    );
+  };
+
+  const UploadFoto = ({onPress, label, foto}) => {
+    return (
+      <TouchableOpacity
+        onPress={onPress}
+        style={{
+          padding: 10,
+          backgroundColor: colors.white,
+          marginVertical: 10,
+          borderWidth: 1,
+          borderRadius: 10,
+          borderColor: 'gray',
+        }}>
+        <Text style={styles.subjudulUpload}>{label}</Text>
+        <Image
+          source={{
+            uri: foto,
+          }}
+          style={{
+            width: '100%',
+            aspectRatio: 1.5,
+          }}
+          resizeMode="center"
+        />
+      </TouchableOpacity>
     );
   };
   return (
@@ -136,9 +310,196 @@ export default function HajiDaftar() {
             style={{
               fontSize: 16,
               fontFamily: fonts.secondary[600],
+              textAlign: 'center',
             }}>
             Formulir daftar haji dan umroh
           </Text>
+          <MyInput label="Nama Pemesan" value={user.username} />
+          <MyGap jarak={5} />
+          <MyInput
+            label="Nama Peserta"
+            placeholder="Nama Peserta"
+            value={dataKirim.name}
+            onChangeText={(value) =>
+              setDataKirim({
+                ...dataKirim,
+                name: value,
+              })
+            }
+          />
+          <MyGap jarak={5} />
+          <MyInput
+            label="NIK"
+            placeholder="NIK"
+            keyboardType="number-pad"
+            value={dataKirim.nik}
+            onChangeText={(value) =>
+              setDataKirim({
+                ...dataKirim,
+                nik: value,
+              })
+            }
+          />
+          <MyGap jarak={5} />
+          <MyInput
+            label="No.KK"
+            placeholder="No.KK"
+            keyboardType="number-pad"
+            value={dataKirim.kk}
+            onChangeText={(value) =>
+              setDataKirim({
+                ...dataKirim,
+                kk: value,
+              })
+            }
+          />
+          <MyGap jarak={5} />
+          <MyInput
+            label="No.Passport"
+            placeholder="No.Passport"
+            value={dataKirim.passport}
+            onChangeText={(value) =>
+              setDataKirim({
+                ...dataKirim,
+                passport: value,
+              })
+            }
+          />
+          <MyGap jarak={5} />
+          <MyInput
+            label="Keterangan Penyakit"
+            placeholder="Keterangan Penyakit"
+            multiline
+            value={dataKirim.keterangan_penyakit}
+            onChangeText={(value) =>
+              setDataKirim({
+                ...dataKirim,
+                keterangan_penyakit: value,
+              })
+            }
+          />
+          <MyGap jarak={5} />
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingVertical: 5,
+            }}>
+            <Text
+              style={{
+                fontFamily: fonts.secondary[600],
+                color: colors.primary,
+                left: 10,
+                fontSize: 16,
+              }}>
+              Pilih Paket & Jadwal Keberangkatan
+            </Text>
+          </View>
+          <DropDownPicker
+            searchable={true}
+            searchablePlaceholder="Pilih Paket & Jadwal Keberangkatan"
+            searchablePlaceholderTextColor="gray"
+            items={dataPaket}
+            // defaultValue={}
+            containerStyle={{height: 50}}
+            style={{backgroundColor: '#fafafa'}}
+            itemStyle={{
+              justifyContent: 'flex-start',
+            }}
+            dropDownStyle={{backgroundColor: '#fafafa'}}
+            onChangeItem={(item) => {
+              console.log(item.value);
+              setItemSelected(item.value);
+              setItemOK(true);
+              setDataKirim({
+                ...dataKirim,
+                id_paket: item.value.id,
+                id_jadwal: item.value.id,
+              });
+            }}
+          />
+
+          {itemOK && (
+            <View
+              style={{
+                padding: 10,
+                backgroundColor: colors.white,
+                marginVertical: 10,
+                borderWidth: 1,
+                borderRadius: 10,
+                borderColor: colors.primary,
+              }}>
+              <Text style={styles.judul}>{itemSelected.judul}</Text>
+              <Text style={styles.subjudul}>Paket : </Text>
+              <Text style={styles.subjudul}>
+                Tanggal Keberangkatan : {itemSelected.tgl_berangkat}{' '}
+              </Text>
+              <Text style={styles.subjudul}>
+                Tanggal Kepulangan : {itemSelected.tgl_pulang}
+              </Text>
+              <Text style={styles.subjudul}>
+                Total Hari : {itemSelected.total_hari}
+              </Text>
+              <Text style={styles.subjudul}>
+                Harga : {itemSelected.harga}/USD
+              </Text>
+              <View
+                style={{
+                  marginVertical: 5,
+                  borderBottomColor: 'gray',
+                  borderBottomWidth: 1,
+                }}
+              />
+              <HTML
+                source={{html: itemSelected.keterangan}}
+                contentWidth={contentWidth}
+              />
+            </View>
+          )}
+
+          <UploadFoto
+            onPress={() => getUpload(1)}
+            label="Upload Foto Copy Dokumen Passport"
+            foto={foto1}
+          />
+          <UploadFoto
+            onPress={() => getUpload(2)}
+            label="Upload Foto Copy Dokumen Buku Suntik Miningitis Asli"
+            foto={foto2}
+          />
+          <UploadFoto
+            onPress={() => getUpload(3)}
+            label="Upload Foto Fokus Wajah Background Putih (Ukuran 4x6)"
+            foto={foto3}
+          />
+          <UploadFoto
+            onPress={() => getUpload(4)}
+            label="Upload Foto Copy Buku Menikah (Jika Sudah Menikah)"
+            foto={foto4}
+          />
+
+          <UploadFoto
+            onPress={() => getUpload(5)}
+            label="Upload Foto Copy Akte Lahir (Jika Usia Dibawah 16 Tahun)"
+            foto={foto5}
+          />
+          <UploadFoto
+            onPress={() => getUpload(6)}
+            label="Upload Foto Copy Dokumen KTP"
+            foto={foto6}
+          />
+          <UploadFoto
+            onPress={() => getUpload(7)}
+            label="Upload Foto Copy Dokumen KK"
+            foto={foto7}
+          />
+          <UploadFoto
+            onPress={() => getUpload(8)}
+            label="Upload Foto Copy Surat Bukti Keterangan Hamil (Jika Perempuan Sedang Mengandung)"
+            foto={foto8}
+          />
+          <MyGap jarak={10} />
+          <MyButton warna={colors.primary} title="DAFTAR" onPress={daftar} />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -150,5 +511,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: fonts.secondary[600],
     marginVertical: 10,
+  },
+  subjudul: {
+    fontSize: 12,
+    fontFamily: fonts.secondary[400],
+    marginVertical: 5,
+  },
+  subjudulUpload: {
+    fontSize: 12,
+    fontFamily: fonts.secondary[600],
+    marginVertical: 5,
   },
 });

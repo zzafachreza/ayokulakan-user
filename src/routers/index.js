@@ -106,7 +106,7 @@ export default function Router() {
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
   return (
-    <Stack.Navigator initialRouteName={'HajiDaftar'}>
+    <Stack.Navigator initialRouteName={'Spalsh'}>
       <Stack.Screen
         name="Splash"
         component={Splash}

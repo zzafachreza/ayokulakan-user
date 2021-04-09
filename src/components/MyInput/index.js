@@ -15,6 +15,7 @@ export default function MyInput({
   secureTextEntry,
   styleInput,
   placeholder,
+  multiline,
   styleLabel,
   onSubmitEditing,
   colorIcon = colors.primary,
@@ -40,6 +41,7 @@ export default function MyInput({
         </Text>
       </View>
       <TextInput
+        multiline={multiline}
         onSubmitEditing={onSubmitEditing}
         autoFocus={autoFocus}
         placeholder={placeholder}
