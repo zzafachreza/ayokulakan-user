@@ -21,7 +21,7 @@ import RNFetchBlob from 'rn-fetch-blob';
 import {useDispatch, useSelector} from 'react-redux';
 import {setForm, setLoading, setMessege, setUsers} from '../../redux';
 
-export default function BeritaTerbaru({navigation}) {
+export default function HajiGallery() {
   const getData = () => {
     axios
       .get('https://ayokulakan.com/api/hajiumroh/gallery?includes=attachments')
@@ -31,27 +31,22 @@ export default function BeritaTerbaru({navigation}) {
       });
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    getData();
+  }, []);
 
-  const [data, setData] = useState([
-    {
-      id: 1,
-      nama: 'Berita Perikanan',
-      uri: 'https://ayokulakan.com/img/pilihan/berita-perikanan.png',
-    },
-    {
-      id: 2,
-      nama: 'Berita Haji dan Umroh',
-      uri: 'https://ayokulakan.com/img/pilihan/haji-umroh.png',
-    },
-    {
-      id: 3,
-      nama: 'Berita Pertanian',
-      uri: 'https://ayokulakan.com/img/pilihan/berita-pertanian.png',
-    },
-  ]);
+  const [data, setData] = useState([]);
 
   const _renderItem = ({item, index}) => {
+    let no = 1;
+
+    let uri = '';
+    if (item.attachments[0]) {
+      uri = 'https://ayokulakan.com/storage/' + item.attachments[0].url;
+    } else {
+      uri = 'https://ayokulakan.com/img/no-images.png';
+    }
+
     return (
       <View
         style={{
@@ -63,23 +58,23 @@ export default function BeritaTerbaru({navigation}) {
           borderColor: colors.primary,
           overflow: 'hidden',
         }}>
+        <Text
+          style={{
+            textAlign: 'center',
+            fontFamily: fonts.secondary[400],
+            backgroundColor: colors.secondary,
+            color: colors.white,
+          }}>
+          Dokumentasi Foto {index + 1}
+        </Text>
         <Image
-          source={{uri: item.uri}}
+          source={{uri: uri}}
           style={{
             width: '100%',
-            aspectRatio: 1,
+            aspectRatio: 2,
           }}
-          // resizeMode="center"
+          resizeMode="center"
         />
-        <View
-          style={{
-            padding: 10,
-            backgroundColor: colors.secondary,
-          }}>
-          <Text style={{fontFamily: fonts.secondary[400], color: colors.white}}>
-            {item.nama}
-          </Text>
-        </View>
       </View>
     );
   };

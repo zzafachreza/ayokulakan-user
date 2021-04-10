@@ -21,6 +21,8 @@ import MapView, {
 import {request, PERMISSIONS} from 'react-native-permissions';
 import Geolocation from '@react-native-community/geolocation';
 import Carousel from 'react-native-snap-carousel';
+import axios from 'axios';
+import {colors, fonts} from '../../utils';
 
 export default function Masjid() {
   let _map = null;
@@ -30,47 +32,56 @@ export default function Masjid() {
   const [radius, setRadius] = useState(1000);
   const [markers, setMarker] = useState([]);
   const [coordinates, setCoordinates] = useState([
-    {
-      id: 0,
-      name: 'Masjid Habiburahman',
-      desc: 'Jl. Setiabudhi No 1',
-      latitude: -6.8739115,
-      longitude: 107.5959483,
-      image: {
-        uri:
-          'https://img.okezone.com/content/2019/11/01/614/2124711/jadi-khatib-salat-jumat-menag-fachrul-razi-pimpin-doa-pakai-bahasa-indonesia-Y9qGq0zkDw.jpg',
-      },
-    },
-    {
-      id: 1,
-      name: 'Masjid Al Ikhlas',
-      desc: 'Jl. Setiabudhi No 2',
-      latitude: -6.8825912,
-      longitude: 107.6006301,
-      image: {
-        uri:
-          'https://img.okezone.com/content/2019/11/01/614/2124711/jadi-khatib-salat-jumat-menag-fachrul-razi-pimpin-doa-pakai-bahasa-indonesia-Y9qGq0zkDw.jpg',
-      },
-    },
-
-    {
-      id: 2,
-      name: 'Masjid Umar Bin Khattab',
-      desc: 'Jl. Setiabudhi No 1',
-      latitude: -6.875898,
-      longitude: 107.5818077,
-      image: {
-        uri:
-          'https://img.okezone.com/content/2019/11/01/614/2124711/jadi-khatib-salat-jumat-menag-fachrul-razi-pimpin-doa-pakai-bahasa-indonesia-Y9qGq0zkDw.jpg',
-      },
-    },
+    // {
+    //   id: 0,
+    //   name: 'Masjid Habiburahman',
+    //   desc: 'Jl. Setiabudhi No 1',
+    //   latitude: -6.8739115,
+    //   longitude: 107.5959483,
+    // },
   ]);
 
+  const updateRadius = (val) => {
+    setRadius(val);
+    locateCurrentPosition(val);
+  };
+
+  const getMasjid = (lat, long, rad) => {
+    axios
+      .get(
+        'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' +
+          lat +
+          ',' +
+          long +
+          '&radius=' +
+          rad +
+          '&type=mosque&keyword=masjid&key=AIzaSyAEwGLRKSdTFlesR57_iurVepdw__eKeK0',
+      )
+      .then((res) => {
+        console.log(res.data.results);
+
+        const dataOld = res.data.results;
+        const data = [];
+        Object.keys(dataOld).map((key, index) => {
+          data.push({
+            id: index,
+            name: dataOld[key].name,
+            alamat: dataOld[key].vicinity,
+            latitude: dataOld[key].geometry.location.lat,
+            longitude: dataOld[key].geometry.location.lng,
+            // foto: dataOld[key].photos,
+          });
+        });
+        console.log(data);
+        setCoordinates(data);
+      });
+  };
+
   useEffect(() => {
-    locateCurrentPosition();
+    locateCurrentPosition(radius);
   }, []);
 
-  const locateCurrentPosition = () => {
+  const locateCurrentPosition = (rad) => {
     Geolocation.getCurrentPosition((position) => {
       console.log(JSON.stringify(position));
 
@@ -80,6 +91,8 @@ export default function Masjid() {
         latitudeDelta: 0.09,
         longitudeDelta: 0.035,
       });
+
+      getMasjid(position.coords.latitude, position.coords.longitude, rad);
 
       setLoading(false);
     });
@@ -111,8 +124,22 @@ export default function Masjid() {
 
   const renderCarouselItem = ({item}) => (
     <View style={styles.cardContainer} key={item.id}>
-      <Text style={styles.cardTitle}>{item.name}</Text>
-      <Image style={styles.cardImage} source={item.image} />
+      <Text
+        style={{
+          color: colors.white,
+          fontFamily: fonts.secondary[600],
+          fontSize: 12,
+        }}>
+        {item.name}
+      </Text>
+      <Text
+        style={{
+          color: colors.white,
+          fontFamily: fonts.secondary[400],
+          fontSize: 10,
+        }}>
+        {item.alamat}
+      </Text>
     </View>
   );
 
@@ -234,7 +261,7 @@ export default function Masjid() {
             // onTouchEnd={1000}
             // onTouchEndCapture={() => console.log('onTouchEndCapture')}
             // onTouchCancel={() => console.log('onTouchCancel')}
-            onValueChange={(value) => setRadius(value)}
+            onValueChange={(value) => updateRadius(value)}
             value={radius}
             maximumValue={10000}
             maximumTrackTintColor="gray"
@@ -269,15 +296,15 @@ const styles = StyleSheet.create({
     marginBottom: 48,
   },
   cardContainer: {
-    backgroundColor: '#274996',
+    backgroundColor: colors.primary,
     opacity: 0.8,
-    height: 200,
+    height: 80,
     width: 300,
     padding: 24,
     borderRadius: 24,
   },
   cardImage: {
-    height: 120,
+    height: 50,
     width: 300,
     bottom: 0,
     position: 'absolute',

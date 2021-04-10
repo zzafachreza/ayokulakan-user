@@ -117,7 +117,7 @@ export default function Hijrah() {
               uri: 'https://ayokulakan.com/img/pilihan/sosial-agama.png',
             }}
             title="Gallery"
-            onPress={() => navigation.navigate('Kiblat')}
+            onPress={() => navigation.navigate('HajiGallery')}
           />
           <IconHijrah
             images={{

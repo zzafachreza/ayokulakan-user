@@ -125,7 +125,7 @@ export default function MyPilihan() {
 
           <IconPemayaran2
             title="Kabar Terbaru"
-            onPress={() => navigation.navigate('Notifikasi')}
+            onPress={() => navigation.navigate('BeritaTerbaru')}
             img={require('../../assets/icon/kabar.png')}
           />
         </View>

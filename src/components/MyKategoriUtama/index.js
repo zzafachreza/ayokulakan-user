@@ -45,7 +45,7 @@ const IconKategoriUtama = ({images, title, tipe, onPress}) => {
           style={{
             fontFamily: 'Montserrat-SemiBold',
             color: '#16A858',
-            fontSize: windowWidth / 35,
+            fontSize: windowWidth / 40,
             textAlign: 'center',
           }}>
           {title}

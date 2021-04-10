@@ -12,7 +12,6 @@ import Search from './Search';
 import Location from './Location';
 import Promo from './Promo';
 import Product from './Product';
-
 import Lapak from './Lapak';
 import Masjid from './Masjid';
 import Jadwal from './Jadwal';
@@ -40,6 +39,7 @@ import PulsaDetail from './PulsaDetail';
 import Hadits from './Hadits';
 import HajiTentang from './HajiTentang';
 import HajiDaftar from './HajiDaftar';
+import HajiGallery from './HajiGallery';
 
 export {
   Splash,
@@ -82,4 +82,5 @@ export {
   Hadits,
   HajiTentang,
   HajiDaftar,
+  HajiGallery,
 };
