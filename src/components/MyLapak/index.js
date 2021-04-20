@@ -10,6 +10,7 @@ import {
 import {Icon} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
+import {colors} from '../../utils';
 
 const IconLapak = ({images, title, desc, lokasi, onPress}) => {
   return (
@@ -47,8 +48,8 @@ const IconLapak = ({images, title, desc, lokasi, onPress}) => {
         <Text
           style={{
             fontFamily: 'Montserrat-Bold',
-            color: '#16A858',
-            fontSize: 18,
+            color: colors.primary,
+            fontSize: 12,
             textAlign: 'center',
           }}>
           {title}
@@ -57,7 +58,7 @@ const IconLapak = ({images, title, desc, lokasi, onPress}) => {
           style={{
             fontFamily: 'Montserrat-Light',
             color: '#000',
-            fontSize: 12,
+            fontSize: 11,
           }}>
           {desc}
         </Text>
@@ -80,7 +81,7 @@ const IconLapak = ({images, title, desc, lokasi, onPress}) => {
               color: '#F8781D',
               // marginTop: 10,ma
               left: 5,
-              fontSize: 12,
+              fontSize: 10,
               // textAlign: 'center',
             }}>
             {lokasi}

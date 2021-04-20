@@ -50,6 +50,15 @@ import {
   HajiTentang,
   HajiDaftar,
   HajiGallery,
+  Tentang,
+  TentangAyo,
+  TentangKurir,
+  TentangKaki,
+  TentangAturan,
+  TentangPerjanjian,
+  TentangSyarat,
+  TentangKebijakan,
+  TentangKontak,
 } from '../pages';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigator} from '../components';
@@ -458,6 +467,123 @@ export default function Router() {
         component={Pesan}
         options={{
           headerTitle: 'Pesan',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="Tentang"
+        component={Tentang}
+        options={{
+          headerTitle: 'Tentang Ayokulakan',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="TentangAyo"
+        component={TentangAyo}
+        options={{
+          headerTitle: 'Tentang Ayokulakan',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="TentangKurir"
+        component={TentangKurir}
+        options={{
+          headerTitle: 'Tentang Kurir',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="TentangKaki"
+        component={TentangKaki}
+        options={{
+          headerTitle: 'Tentang Kaki Lima',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="TentangAturan"
+        component={TentangAturan}
+        options={{
+          headerTitle: 'Tentang Aturan Pengguna',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="TentangPerjanjian"
+        component={TentangPerjanjian}
+        options={{
+          headerTitle: 'Perjanjian',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="TentangSyarat"
+        component={TentangSyarat}
+        options={{
+          headerTitle: 'Syarat dan Ketentuan',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="TentangKebijakan"
+        component={TentangKebijakan}
+        options={{
+          headerTitle: 'Kebijakan Privasi',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="TentangKontak"
+        component={TentangKontak}
+        options={{
+          headerTitle: 'Kontak Kami',
           headerTintColor: 'white',
           headerStyle: {
             backgroundColor: colors.primary,

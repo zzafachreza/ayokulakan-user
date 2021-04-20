@@ -17,12 +17,12 @@ export default function MyCarouser() {
     {
       id: 6,
       desc: 'Promo diskon',
-      image: 'https://setiabudhi-supermarket.co.id/promo/papaya.jpg',
+      image: require('../../assets/eat.jpeg'),
     },
     {
       id: 7,
       desc: 'Promo Diskon',
-      image: 'https://setiabudhi-supermarket.co.id/promo/eat.jpg',
+      image: require('../../assets/bawal.jpeg'),
     },
   ]);
 
@@ -30,7 +30,7 @@ export default function MyCarouser() {
     return (
       <ImageBackground
         key={item.id}
-        source={{uri: item.image}}
+        source={item.image}
         style={{
           height: Math.round((windowWidth * 9) / 16),
         }}>

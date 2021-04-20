@@ -48,6 +48,11 @@ import MyPilihan from '../../components/MyPilihan';
 import MyPembayaranOnline from '../../components/MyPembayaranOnline';
 import MyKategoriUtama from '../../components/MyKategoriUtama';
 import MyHijrah from '../../components/MyHijrah';
+import MyOfficialStore from '../../components/MyOfficialStore';
+import MyPertanian from '../../components/MyPertanian';
+import MyPerikanan from '../../components/MyPerikanan';
+import MyUkm from '../../components/MyUkm';
+import MyPerkebunan from '../../components/MyPerkebunan';
 
 const image = [
   {
@@ -674,55 +679,14 @@ export default function Home({navigation, route}) {
 
           <MyProductMew />
 
-          <View
-            style={{
-              // marginHorizontal: 10,
-              padding: 10,
-              backgroundColor: '#F8781D',
-              // borderRadius: 50,
-              // borderBottomLeftRadius: 10,
-              justifyContent: 'center',
-              // alignItems: 'center',
-              elevation: 2,
-            }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                // justifyContent: 'center',
-                alignItems: 'center',
-                paddingVertical: 5,
-              }}>
-              <Icon
-                type="ionicon"
-                name="shield-checkmark-outline"
-                color="#FFF"
-                size={16}
-              />
-              <Text
-                style={{
-                  fontFamily: 'Montserrat-SemiBold',
-                  color: '#FFF',
-                  left: 10,
-                  fontSize: 16,
-                }}>
-                Gak perlu beli. SEWA AJA DISINI
-              </Text>
-            </View>
-          </View>
-          <View
-            style={{
-              flex: 1,
-              padding: 10,
-              // justifyContent: 'space-around',
-            }}>
-            {/* <FlatList
-              numColumns={2}
-              data={dataBarang2}
-              renderItem={renderItem2}
-              keyExtractor={(item) => item.id}
-            /> */}
-            <MyRentalNew />
-          </View>
+          <MyRentalNew />
+
+          <MyOfficialStore />
+
+          <MyPertanian />
+          <MyPerikanan />
+          <MyUkm />
+          <MyPerkebunan />
         </ScrollView>
       </SafeAreaView>
     </>

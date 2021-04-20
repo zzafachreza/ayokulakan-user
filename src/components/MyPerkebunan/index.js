@@ -13,12 +13,13 @@ import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
+import {colors} from '../../utils';
 
-export default function MyNewRental() {
+export default function MyPerkebunan() {
   useEffect(() => {
     axios
       .get(
-        'https://ayokulakan.com/api/rental?limit=4&includes=attachments,kategori,sub_kategori,user',
+        'https://ayokulakan.com/api/barang?limit=20&includes=creator,attachments&id_kategori=3',
       )
       .then((res) => {
         console.log(res.data.data);
@@ -61,8 +62,8 @@ export default function MyNewRental() {
       <TouchableOpacity
         style={styles.card}
         onPress={() =>
-          navigation.navigate('SewaDetail', {
-            sewa: item,
+          navigation.navigate('Product', {
+            product: item,
           })
         }
         activeOpacity={1.0}>
@@ -73,58 +74,22 @@ export default function MyNewRental() {
               flex: 1,
             }}>
             <Text style={styles.title}>
-              Rp. {new Intl.NumberFormat().format(item.harga_sewa)}
+              Rp. {new Intl.NumberFormat().format(item.harga_barang)}
             </Text>
           </View>
           <View
             style={{
               flex: 1,
             }}>
-            <Text style={styles.subTitle}>{item.judul}</Text>
+            <Text style={styles.subTitle}>{item.nama_barang}</Text>
           </View>
-          {/* <View
-          style={{
-            flex: 1,
-            marginTop: 10,
-            // backgroundColor: 'red',
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
-          <Icon type="font-awesome" name="map-marker" color="green" size={12} />
-          <Text
-            style={{
-              fontFamily: 'Nunito-Light',
-              fontSize: 12,
-              left: 5,
-              color: '#000',
-            }}>
-            {item.lokasi}
-          </Text>
-        </View> */}
+
           <View
             style={{
               marginTop: 10,
               flexDirection: 'row',
               alignItems: 'center',
-            }}>
-            {/* <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
-            <Bintang nilai={item.nilai} />
-          </View> */}
-            {/* <Text
-            style={{
-              fontFamily: 'Montserrat-Light',
-              fontSize: 12,
-              left: 5,
-              color: '#000',
-            }}>
-            ( {item.jml} )
-          </Text> */}
-          </View>
+            }}></View>
         </View>
       </TouchableOpacity>
     );
@@ -136,7 +101,7 @@ export default function MyNewRental() {
         style={{
           // marginHorizontal: 10,
           padding: 10,
-          backgroundColor: '#F8781D',
+          backgroundColor: colors.primary,
           // borderRadius: 50,
           // borderBottomLeftRadius: 10,
           justifyContent: 'center',
@@ -150,12 +115,7 @@ export default function MyNewRental() {
             alignItems: 'center',
             paddingVertical: 5,
           }}>
-          <Icon
-            type="ionicon"
-            name="shield-checkmark-outline"
-            color="#FFF"
-            size={16}
-          />
+          <Icon type="ionicon" name="grid" color="#FFF" size={16} />
           <Text
             style={{
               fontFamily: 'Montserrat-SemiBold',
@@ -163,7 +123,7 @@ export default function MyNewRental() {
               left: 10,
               fontSize: 16,
             }}>
-            Gak perlu beli. SEWA AJA DISINI
+            PRODUK PERTANIAN ORGANIK
           </Text>
         </View>
       </View>

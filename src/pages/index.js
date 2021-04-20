@@ -41,6 +41,15 @@ import HajiTentang from './HajiTentang';
 import HajiDaftar from './HajiDaftar';
 import HajiGallery from './HajiGallery';
 
+import Tentang from './Tentang';
+import TentangAyo from './TentangAyo';
+import TentangKurir from './TentangKurir';
+import TentangKaki from './TentangKaki';
+import TentangAturan from './TentangAturan';
+import TentangPerjanjian from './TentangPerjanjian';
+import TentangSyarat from './TentangSyarat';
+import TentangKebijakan from './TentangKebijakan';
+import TentangKontak from './TentangKontak';
 export {
   Splash,
   GetStarted,
@@ -83,4 +92,13 @@ export {
   HajiTentang,
   HajiDaftar,
   HajiGallery,
+  Tentang,
+  TentangAyo,
+  TentangKurir,
+  TentangKaki,
+  TentangAturan,
+  TentangPerjanjian,
+  TentangSyarat,
+  TentangKebijakan,
+  TentangKontak,
 };

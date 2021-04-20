@@ -99,6 +99,7 @@ export default function MyPilihan() {
           <IconPemayaran2
             title="Tentang Ayokulakan"
             img={require('../../assets/icon/tentang.png')}
+            onPress={() => navigation.navigate('Tentang')}
           />
           <IconPemayaran2
             title="Panduan"
