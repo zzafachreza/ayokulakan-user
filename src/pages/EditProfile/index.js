@@ -72,32 +72,11 @@ export default function EditProfile({navigation, route}) {
       });
   };
 
-  // const getImage = () => {
-  //   ImagePicker.showImagePicker({quality: 0.4, maxWidth: 500}, (response) => {
-  //     // console.log('Response = ', response);
-
-  //     if (response.didCancel) {
-  //       console.log('User cancelled image picker');
-  //     } else if (response.error) {
-  //       console.log('ImagePicker Error: ', response.error);
-  //     } else if (response.customButton) {
-  //       console.log('User tapped custom button: ', response.customButton);
-  //     } else {
-  //       // const source = { uri: response.uri };
-  //       const sourceFire = {uri: response.uri};
-  //       console.log(sourceFire);
-
-  //       // You can also display the image using data:
-  //       const source = 'data:image/jpeg;base64,' + response.data;
-  //       console.log(source);
-  //       setUsers({
-  //         ...users,
-  //         foto: source,
-  //       });
-  //     }
-  //   });
-  // };
-
+  const [alamat1, setAlamat1] = useState('Jl. pertama');
+  const [alamat2, setAlamat2] = useState('Jl. kedua');
+  const [alamat3, setAlamat3] = useState('Jl. ketiga');
+  const [alamat4, setAlamat4] = useState('Jl. keemapt');
+  const [alamat5, setAlamat5] = useState('Jl. Kelima');
   return (
     <>
       <ScrollView
@@ -138,7 +117,7 @@ export default function EditProfile({navigation, route}) {
           />
           <MyGap jarak={5} />
           <MyInput
-            label="Alamat"
+            label="Alamat (Utama)"
             iconname="map-outline"
             value={kirim.alamat}
             onChangeText={(value) =>
@@ -149,47 +128,300 @@ export default function EditProfile({navigation, route}) {
             }
           />
 
-          {/* <View
+          <View
             style={{
+              marginTop: 10,
               flexDirection: 'row',
+              borderBottomWidth: 1,
+              paddingBottom: 10,
+              borderColor: colors.primary,
             }}>
-            <View style={{flexDirection: 'row', flex: 1}}>
-              <Icon
-                type="ionicon"
-                name="home"
-                color={colors.primary}
-                size={12}
-              />
+            <View style={{padding: 5}}>
               <Text
                 style={{
-                  paddingLeft: 10,
-                  fontSize: 18,
-                  fontFamily: fonts.primary[400],
-                  color: 'black',
+                  fontSize: 14,
+                  fontFamily: fonts.secondary[600],
                 }}>
-                {users.alamat}
+                Alamat (1)
+              </Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontFamily: fonts.secondary[400],
+                }}>
+                {alamat1}
               </Text>
             </View>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Alamat', users)}
+            <View
               style={{
-                backgroundColor: colors.primary,
-                // borderWidth: 1,
-                borderRadius: 10,
-                padding: 20,
+                flex: 1,
                 flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-                margin: 10,
+                justifyContent: 'flex-end',
+                alignItems: 'flex-end',
               }}>
-              <Icon
-                type="font-awesome"
-                name="pencil"
-                color={colors.white}
-                size={12}
-              />
-            </TouchableOpacity>
-          </View> */}
+              <TouchableOpacity
+                onPress={() => navigation.navigate('EditTambahAlamat')}>
+                <Text
+                  style={{
+                    backgroundColor: colors.primary,
+                    padding: 10,
+                    color: 'white',
+                    borderRadius: 10,
+                    marginRight: 10,
+                  }}>
+                  Edit
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('EditTambahAlamat')}>
+                <Text
+                  style={{
+                    backgroundColor: colors.danger,
+                    padding: 10,
+                    color: 'white',
+                    borderRadius: 10,
+                  }}>
+                  Hapus
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <View
+            style={{
+              marginTop: 10,
+              flexDirection: 'row',
+              borderBottomWidth: 1,
+              paddingBottom: 10,
+              borderColor: colors.primary,
+            }}>
+            <View style={{padding: 5}}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontFamily: fonts.secondary[600],
+                }}>
+                Alamat (2)
+              </Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontFamily: fonts.secondary[400],
+                }}>
+                {alamat2}
+              </Text>
+            </View>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+                alignItems: 'flex-end',
+              }}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('EditTambahAlamat')}>
+                <Text
+                  style={{
+                    backgroundColor: colors.primary,
+                    padding: 10,
+                    color: 'white',
+                    borderRadius: 10,
+                    marginRight: 10,
+                  }}>
+                  Edit
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('EditTambahAlamat')}>
+                <Text
+                  style={{
+                    backgroundColor: colors.danger,
+                    padding: 10,
+                    color: 'white',
+                    borderRadius: 10,
+                  }}>
+                  Hapus
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <View
+            style={{
+              marginTop: 10,
+              flexDirection: 'row',
+              borderBottomWidth: 1,
+              paddingBottom: 10,
+              borderColor: colors.primary,
+            }}>
+            <View style={{padding: 5}}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontFamily: fonts.secondary[600],
+                }}>
+                Alamat (3)
+              </Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontFamily: fonts.secondary[400],
+                }}>
+                {alamat3}
+              </Text>
+            </View>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+                alignItems: 'flex-end',
+              }}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('EditTambahAlamat')}>
+                <Text
+                  style={{
+                    backgroundColor: colors.primary,
+                    padding: 10,
+                    color: 'white',
+                    borderRadius: 10,
+                    marginRight: 10,
+                  }}>
+                  Edit
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('EditTambahAlamat')}>
+                <Text
+                  style={{
+                    backgroundColor: colors.danger,
+                    padding: 10,
+                    color: 'white',
+                    borderRadius: 10,
+                  }}>
+                  Hapus
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <View
+            style={{
+              marginTop: 10,
+              flexDirection: 'row',
+              borderBottomWidth: 1,
+              paddingBottom: 10,
+              borderColor: colors.primary,
+            }}>
+            <View style={{padding: 5}}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontFamily: fonts.secondary[600],
+                }}>
+                Alamat (4)
+              </Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontFamily: fonts.secondary[400],
+                }}>
+                {alamat4}
+              </Text>
+            </View>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+                alignItems: 'flex-end',
+              }}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('EditTambahAlamat')}>
+                <Text
+                  style={{
+                    backgroundColor: colors.primary,
+                    padding: 10,
+                    color: 'white',
+                    borderRadius: 10,
+                    marginRight: 10,
+                  }}>
+                  Edit
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('EditTambahAlamat')}>
+                <Text
+                  style={{
+                    backgroundColor: colors.danger,
+                    padding: 10,
+                    color: 'white',
+                    borderRadius: 10,
+                  }}>
+                  Hapus
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <View
+            style={{
+              marginTop: 10,
+              flexDirection: 'row',
+              borderBottomWidth: 1,
+              paddingBottom: 10,
+              borderColor: colors.primary,
+            }}>
+            <View style={{padding: 5}}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontFamily: fonts.secondary[600],
+                }}>
+                Alamat (5)
+              </Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontFamily: fonts.secondary[400],
+                }}>
+                {alamat5}
+              </Text>
+            </View>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+                alignItems: 'flex-end',
+              }}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('EditTambahAlamat')}>
+                <Text
+                  style={{
+                    backgroundColor: colors.primary,
+                    padding: 10,
+                    color: 'white',
+                    borderRadius: 10,
+                    marginRight: 10,
+                  }}>
+                  Edit
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('EditTambahAlamat')}>
+                <Text
+                  style={{
+                    backgroundColor: colors.danger,
+                    padding: 10,
+                    color: 'white',
+                    borderRadius: 10,
+                  }}>
+                  Hapus
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
         <View style={{padding: 20}}>
           <MyGap jarak={5} />

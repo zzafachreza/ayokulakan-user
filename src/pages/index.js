@@ -50,6 +50,9 @@ import TentangPerjanjian from './TentangPerjanjian';
 import TentangSyarat from './TentangSyarat';
 import TentangKebijakan from './TentangKebijakan';
 import TentangKontak from './TentangKontak';
+import EditTambahAlamat from './EditTambahAlamat';
+import PpobData from './PpobData';
+import PpobDataDetail from './PpobDataDetail';
 export {
   Splash,
   GetStarted,
@@ -101,4 +104,7 @@ export {
   TentangSyarat,
   TentangKebijakan,
   TentangKontak,
+  EditTambahAlamat,
+  PpobData,
+  PpobDataDetail,
 };

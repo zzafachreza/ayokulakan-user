@@ -59,6 +59,9 @@ import {
   TentangSyarat,
   TentangKebijakan,
   TentangKontak,
+  EditTambahAlamat,
+  PpobData,
+  PpobDataDetail,
 } from '../pages';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigator} from '../components';
@@ -316,11 +319,38 @@ export default function Router() {
           },
         })}
       />
+
       <Stack.Screen
         name="PulsaDetail"
         component={PulsaDetail}
         options={({route, navigation}) => ({
           title: 'PULSA DETAIL',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#16A858',
+            elevation: 0, // remove shadow on Android
+          },
+        })}
+      />
+
+      <Stack.Screen
+        name="PpobDataDetail"
+        component={PpobDataDetail}
+        options={({route, navigation}) => ({
+          title: 'DATA DETAIL',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#16A858',
+            elevation: 0, // remove shadow on Android
+          },
+        })}
+      />
+
+      <Stack.Screen
+        name="PpobData"
+        component={PpobData}
+        options={({route, navigation}) => ({
+          title: 'PAKET DATA',
           headerTintColor: 'white',
           headerStyle: {
             backgroundColor: '#16A858',
@@ -584,6 +614,19 @@ export default function Router() {
         component={TentangKontak}
         options={{
           headerTitle: 'Kontak Kami',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="EditTambahAlamat"
+        component={EditTambahAlamat}
+        options={{
+          headerTitle: 'Tambah Alamat Lain',
           headerTintColor: 'white',
           headerStyle: {
             backgroundColor: colors.primary,

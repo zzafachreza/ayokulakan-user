@@ -133,6 +133,7 @@ export default function MyPembayaranOnline() {
           <IconPemayaran
             title="Paket Data"
             img={require('../../assets/icon/data.png')}
+            onPress={() => navigation.navigate('PpobData')}
           />
           <IconPemayaran
             title="Voucher Game"
