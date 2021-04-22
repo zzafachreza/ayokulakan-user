@@ -62,6 +62,12 @@ import {
   EditTambahAlamat,
   PpobData,
   PpobDataDetail,
+  PpobGame,
+  PpobGameDetail,
+  PpobPlnToken,
+  PpobPlnTokenDetail,
+  PpobPlnMeteran,
+  PpobPlnMeteranDetail,
 } from '../pages';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigator} from '../components';
@@ -351,6 +357,84 @@ export default function Router() {
         component={PpobData}
         options={({route, navigation}) => ({
           title: 'PAKET DATA',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#16A858',
+            elevation: 0, // remove shadow on Android
+          },
+        })}
+      />
+
+      <Stack.Screen
+        name="PpobGame"
+        component={PpobGame}
+        options={({route, navigation}) => ({
+          title: 'GAME VOUCHER',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#16A858',
+            elevation: 0, // remove shadow on Android
+          },
+        })}
+      />
+
+      <Stack.Screen
+        name="PpobGameDetail"
+        component={PpobGameDetail}
+        options={({route, navigation}) => ({
+          title: 'GAME VOUCHER',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#16A858',
+            elevation: 0, // remove shadow on Android
+          },
+        })}
+      />
+
+      <Stack.Screen
+        name="PpobPlnToken"
+        component={PpobPlnToken}
+        options={({route, navigation}) => ({
+          title: 'PLN PRABAYAR',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#16A858',
+            elevation: 0, // remove shadow on Android
+          },
+        })}
+      />
+
+      <Stack.Screen
+        name="PpobPlnTokenDetail"
+        component={PpobPlnTokenDetail}
+        options={({route, navigation}) => ({
+          title: 'PLN PRABAYAR',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#16A858',
+            elevation: 0, // remove shadow on Android
+          },
+        })}
+      />
+
+      <Stack.Screen
+        name="PpobPlnMeteran"
+        component={PpobPlnMeteran}
+        options={({route, navigation}) => ({
+          title: 'PLN PASCABAYAR',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#16A858',
+            elevation: 0, // remove shadow on Android
+          },
+        })}
+      />
+
+      <Stack.Screen
+        name="PpobPlnMeteranDetail"
+        component={PpobPlnMeteranDetail}
+        options={({route, navigation}) => ({
+          title: 'PLN PASCABAYAR',
           headerTintColor: 'white',
           headerStyle: {
             backgroundColor: '#16A858',

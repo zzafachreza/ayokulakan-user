@@ -53,6 +53,13 @@ import TentangKontak from './TentangKontak';
 import EditTambahAlamat from './EditTambahAlamat';
 import PpobData from './PpobData';
 import PpobDataDetail from './PpobDataDetail';
+import PpobGame from './PpobGame';
+import PpobGameDetail from './PpobGameDetail';
+import PpobPlnMeteran from './PpobPlnMeteran';
+import PpobPlnMeteranDetail from './PpobPlnMeteranDetail';
+import PpobPlnToken from './PpobPlnToken';
+import PpobPlnTokenDetail from './PpobPlnTokenDetail';
+
 export {
   Splash,
   GetStarted,
@@ -107,4 +114,10 @@ export {
   EditTambahAlamat,
   PpobData,
   PpobDataDetail,
+  PpobGame,
+  PpobGameDetail,
+  PpobPlnToken,
+  PpobPlnTokenDetail,
+  PpobPlnMeteran,
+  PpobPlnMeteranDetail,
 };

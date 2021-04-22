@@ -9,24 +9,24 @@ export default function MyOfficialStore() {
   const [dataOfficial, setDataOfficial] = useState([
     {
       id: 0,
-      image: 'https://ayokulakan.com/new_temp/images/banners/banner-side.png',
+      image: require('../../assets/01.png'),
     },
     {
       id: 1,
-      image: 'https://ayokulakan.com/new_temp/images/banners/cat-banner-1.jpg',
+      image: require('../../assets/02.png'),
     },
     {
       id: 2,
-      image: 'https://ayokulakan.com/new_temp/images/banners/home-banner2.jpg',
+      image: require('../../assets/03.png'),
     },
   ]);
 
   const renderCarouselItem = ({item}) => (
     <View style={styles.cardContainer} key={item.id}>
       <Image
-        source={{uri: item.image}}
+        source={item.image}
         style={{
-          height: 250,
+          width: '100%',
         }}
       />
     </View>
@@ -110,19 +110,6 @@ const styles = StyleSheet.create({
     width: 300,
     // padding: 24,
     overflow: 'hidden',
-    borderRadius: 24,
-  },
-  cardImage: {
-    height: 50,
-    width: 300,
-    bottom: 0,
-    position: 'absolute',
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24,
-  },
-  cardTitle: {
-    color: 'white',
-    fontSize: 22,
-    alignSelf: 'center',
+    borderRadius: 10,
   },
 });

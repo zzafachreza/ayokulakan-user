@@ -138,19 +138,24 @@ export default function MyPembayaranOnline() {
           <IconPemayaran
             title="Voucher Game"
             img={require('../../assets/icon/game.png')}
+            onPress={() => navigation.navigate('PpobGame')}
           />
           <IconPemayaran
             title="BPJS Kesehatan"
             img={require('../../assets/icon/bpjs.png')}
           />
           <IconPemayaran
-            title="PLN Pascabayar"
-            img={require('../../assets/icon/pln2.png')}
-          />
-          <IconPemayaran
             title="PLN Prabayar"
             img={require('../../assets/icon/pln.png')}
+            onPress={() => navigation.navigate('PpobPlnToken')}
           />
+
+          <IconPemayaran
+            title="PLN Pascabayar"
+            img={require('../../assets/icon/pln2.png')}
+            onPress={() => navigation.navigate('PpobPlnMeteran')}
+          />
+
           <IconPemayaran
             title="PDAM"
             img={require('../../assets/icon/pdam.png')}
