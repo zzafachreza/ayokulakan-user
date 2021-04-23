@@ -43,21 +43,21 @@ export default function Splash({navigation}) {
       duration: 1000,
     }).start();
 
-    Animated.loop(
-      Animated.sequence([
-        Animated.timing(top, {
-          toValue: 0.6,
-          duration: 800,
-        }),
-        Animated.timing(top, {
-          toValue: 0.5,
-          duration: 800,
-        }),
-      ]),
-      {
-        iterations: 10,
-      },
-    ).start();
+    // Animated.loop(
+    //   Animated.sequence([
+    //     Animated.timing(top, {
+    //       toValue: 0.6,
+    //       duration: 800,
+    //     }),
+    //     Animated.timing(top, {
+    //       toValue: 0.5,
+    //       duration: 800,
+    //     }),
+    //   ]),
+    //   {
+    //     iterations: 10,
+    //   },
+    // ).start();
   };
 
   useEffect(() => {

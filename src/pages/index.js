@@ -59,6 +59,9 @@ import PpobPlnMeteran from './PpobPlnMeteran';
 import PpobPlnMeteranDetail from './PpobPlnMeteranDetail';
 import PpobPlnToken from './PpobPlnToken';
 import PpobPlnTokenDetail from './PpobPlnTokenDetail';
+import Fitur from './Fitur';
+import KakiLima from './KakiLima';
+import Kurir from './Kurir';
 
 export {
   Splash,
@@ -120,4 +123,7 @@ export {
   PpobPlnTokenDetail,
   PpobPlnMeteran,
   PpobPlnMeteranDetail,
+  Fitur,
+  Kurir,
+  KakiLima,
 };

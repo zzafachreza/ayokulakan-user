@@ -108,6 +108,7 @@ export default function MyPilihan() {
           <IconPemayaran2
             title="Fitur"
             img={require('../../assets/icon/fitur.png')}
+            onPress={() => navigation.navigate('Fitur')}
           />
           <IconPemayaran2
             title="Kakilima"

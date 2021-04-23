@@ -68,6 +68,9 @@ import {
   PpobPlnTokenDetail,
   PpobPlnMeteran,
   PpobPlnMeteranDetail,
+  Fitur,
+  KakiLima,
+  Kurir,
 } from '../pages';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigator} from '../components';
@@ -228,6 +231,19 @@ export default function Router() {
         component={BeritaTerbaru}
         options={{
           headerTitle: 'Berita',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#16A858',
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="Kurir"
+        component={Kurir}
+        options={{
+          headerTitle: 'Peta Kurir',
           headerTintColor: 'white',
           headerStyle: {
             backgroundColor: '#16A858',
@@ -581,6 +597,31 @@ export default function Router() {
         component={Pesan}
         options={{
           headerTitle: 'Pesan',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="Fitur"
+        component={Fitur}
+        options={{
+          headerTitle: 'Fitur Ayokulakan',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+      <Stack.Screen
+        name="KakiLima"
+        component={KakiLima}
+        options={{
+          headerTitle: 'Kaki Lima Ayokulakan',
           headerTintColor: 'white',
           headerStyle: {
             backgroundColor: colors.primary,

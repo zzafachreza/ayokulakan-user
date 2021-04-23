@@ -83,7 +83,7 @@ const Loading = () => {
 export default function App() {
   PushNotification.createChannel(
     {
-      channelId: 'ayokulakan-user', // (required)
+      channelId: 'ayokulakan', // (required)
       channelName: 'My channel', // (required)
       channelDescription: 'A channel to categorise your notifications', // (optional) default: undefined.
       playSound: true, // (optional) default: true
@@ -93,6 +93,19 @@ export default function App() {
     },
     (created) => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
   );
+  // PushNotification.localNotificationSchedule({
+  //   channelId: 'ayokulakan',
+  //   message: 'Satu Hari Satu Hadits', // (required)
+  //   date: new Date(Date.now()),
+  //   repeatType: 'minute',
+  // });
+
+  // PushNotification.localNotificationSchedule({
+  //   //... You can use all the options from localNotifications
+  //   channelId: 'ayokulakan',
+  //   message: 'My Notification Message', // (required),
+  //   repeatType: 'minute',
+  // });
 
   LogBox.ignoreAllLogs();
   const [routers, setrouters] = useState('Splash');
