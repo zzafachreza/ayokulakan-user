@@ -43,7 +43,9 @@ export default function Fitur({navigation}) {
             <Text style={styles.title}>Peta Masjid</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.card}>
+        <TouchableOpacity
+          style={styles.card}
+          onPress={() => navigation.navigate('Cuaca')}>
           <Image
             resizeMode="contain"
             style={styles.image}
@@ -95,7 +97,9 @@ export default function Fitur({navigation}) {
             <Text style={styles.title}>Informasi Perikanan</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.card}>
+        <TouchableOpacity
+          style={styles.card}
+          onPress={() => navigation.navigate('Kurs')}>
           <Image
             resizeMode="contain"
             style={styles.image}

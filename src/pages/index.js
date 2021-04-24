@@ -62,6 +62,8 @@ import PpobPlnTokenDetail from './PpobPlnTokenDetail';
 import Fitur from './Fitur';
 import KakiLima from './KakiLima';
 import Kurir from './Kurir';
+import Kurs from './Kurs';
+import Cuaca from './Cuaca';
 
 export {
   Splash,
@@ -126,4 +128,6 @@ export {
   Fitur,
   Kurir,
   KakiLima,
+  Kurs,
+  Cuaca,
 };

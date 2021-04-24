@@ -71,6 +71,8 @@ import {
   Fitur,
   KakiLima,
   Kurir,
+  Kurs,
+  Cuaca,
 } from '../pages';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigator} from '../components';
@@ -155,6 +157,32 @@ export default function Router() {
         component={Berita}
         options={{
           headerTitle: 'Berita',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#16A858',
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="Kurs"
+        component={Kurs}
+        options={{
+          headerTitle: 'Konversi Mata Uang',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#16A858',
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="Cuaca"
+        component={Cuaca}
+        options={{
+          headerTitle: 'Informasi Cuaca Terkini',
           headerTintColor: 'white',
           headerStyle: {
             backgroundColor: '#16A858',
