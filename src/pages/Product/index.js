@@ -18,6 +18,7 @@ import axios from 'axios';
 import {colors} from '../../utils';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
+import HTML from 'react-native-render-html';
 
 const ListProduct = ({icon, title, desc}) => {
   const Bintang = ({nilai}) => {
@@ -246,31 +247,37 @@ export default function Produk({navigation, route}) {
   const addToCart = (id) => {
     // console.log(user.id);
 
-    const kirim = {
-      user_id: UsersGlobal.data.id,
-      id_barang: id,
-      created_by: UsersGlobal.data.id,
-      jumlah_barang: 1,
-      form_id: id,
-      form_type: 'img_barang',
-    };
-    console.log(kirim);
-    axios
-      .post('https://ayokulakan.com/api/favorit-barang', kirim, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then((res) => {
-        console.log(res);
-      });
+    try {
+      const kirim = {
+        user_id: UsersGlobal.data.id,
+        id_barang: id,
+        created_by: UsersGlobal.data.id,
+        jumlah_barang: 1,
+        form_id: id,
+        form_type: 'img_barang',
+      };
+      console.log(kirim);
+      axios
+        .post('https://ayokulakan.com/api/favorit-barang', kirim, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        });
 
-    showMessage({
-      type: 'success',
-      message: 'berhasil ditambahkan ke keranjang',
-    });
-    // dispatch(setLoading(false));
+      showMessage({
+        type: 'success',
+        message: 'berhasil ditambahkan ke keranjang',
+      });
+      // dispatch(setLoading(false));
+    } catch (error) {
+      alert('Anda Harus Login Terlebih Dahulu !');
+      navigation.navigate('Account');
+    }
   };
+
   return (
     <SafeAreaView
       style={{
@@ -337,8 +344,9 @@ export default function Produk({navigation, route}) {
                   fontSize: 20,
                   color: '#000',
                 }}>
-                {product.deskripsi_barang}
+                <HTML source={{html: product.deskripsi_barang}} />
               </Text>
+
               <TouchableOpacity
                 style={{
                   // flex: 1,
