@@ -93,18 +93,42 @@ export default function MyKategoriUtama() {
         <IconKategoriUtama
           images={require('../../assets/icon/pertanian.png')}
           title="Pertanian"
+          onPress={() =>
+            navigation.navigate('CategoryProductUtama', {
+              id_kategori: 1,
+              name: 'PERTANIAN',
+            })
+          }
         />
         <IconKategoriUtama
           images={require('../../assets/icon/perikanan.png')}
           title="Perikanan"
+          onPress={() =>
+            navigation.navigate('CategoryProductUtama', {
+              id_kategori: 2,
+              name: 'PERIKANAN',
+            })
+          }
         />
         <IconKategoriUtama
           images={require('../../assets/icon/perkebunan.png')}
           title="Perkebunan"
+          onPress={() =>
+            navigation.navigate('CategoryProductUtama', {
+              id_kategori: 3,
+              name: 'PERKEBUNAN',
+            })
+          }
         />
         <IconKategoriUtama
           images={require('../../assets/icon/perternakan.png')}
           title="Peternakan"
+          onPress={() =>
+            navigation.navigate('CategoryProductUtama', {
+              id_kategori: 4,
+              name: 'PETERNAKAN',
+            })
+          }
         />
       </View>
     </View>

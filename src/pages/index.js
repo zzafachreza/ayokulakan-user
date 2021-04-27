@@ -64,6 +64,12 @@ import KakiLima from './KakiLima';
 import Kurir from './Kurir';
 import Kurs from './Kurs';
 import Cuaca from './Cuaca';
+import PpobPdam from './PpobPdam';
+import PpobTv from './PpobTv';
+import PpobInternet from './PpobInternet';
+import PpobTelepon from './PpobTelepon';
+import PpobBpjs from './PpobBpjs';
+import CategoryProductUtama from './CategoryProductUtama';
 
 export {
   Splash,
@@ -130,4 +136,10 @@ export {
   KakiLima,
   Kurs,
   Cuaca,
+  PpobPdam,
+  PpobTv,
+  PpobInternet,
+  PpobTelepon,
+  PpobBpjs,
+  CategoryProductUtama,
 };

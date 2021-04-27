@@ -143,6 +143,7 @@ export default function MyPembayaranOnline() {
           <IconPemayaran
             title="BPJS Kesehatan"
             img={require('../../assets/icon/bpjs.png')}
+            onPress={() => navigation.navigate('PpobBpjs')}
           />
           <IconPemayaran
             title="PLN Prabayar"
@@ -159,6 +160,7 @@ export default function MyPembayaranOnline() {
           <IconPemayaran
             title="PDAM"
             img={require('../../assets/icon/pdam.png')}
+            onPress={() => navigation.navigate('PpobPdam')}
           />
           <IconPemayaran
             title="Tiket Kereta"
@@ -194,12 +196,14 @@ export default function MyPembayaranOnline() {
             img={{
               uri: 'https://ayokulakan.com/img/Icon-PPOB/TV.png',
             }}
+            onPress={() => navigation.navigate('PpobTv')}
           />
           <IconPemayaran
             title="Internet"
             img={{
               uri: 'https://ayokulakan.com/img/Icon-PPOB/Internet.png',
             }}
+            onPress={() => navigation.navigate('PpobInternet')}
           />
 
           <IconPemayaran
@@ -207,6 +211,7 @@ export default function MyPembayaranOnline() {
             img={{
               uri: 'https://ayokulakan.com/img/Icon-PPOB/Telepone-Rumah.png',
             }}
+            onPress={() => navigation.navigate('PpobTelepon')}
           />
 
           <IconPemayaran

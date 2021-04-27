@@ -15,13 +15,13 @@ import 'intl';
 import 'intl/locale-data/jsonp/en';
 import {colors} from '../../utils';
 
-export default function CategoryProduct({navigation, route}) {
-  const id_subkategori = route.params.id_subkategori;
+export default function CategoryProductUtama({navigation, route}) {
+  const id_kategori = route.params.id_kategori;
   useEffect(() => {
     axios
       .get(
-        'https://ayokulakan.com/api/barang?limit=50&includes=creator,attachments&id_sub_kategori=' +
-          id_subkategori,
+        'https://ayokulakan.com/api/barang?limit=50&includes=creator,attachments&id_kategori=' +
+          id_kategori,
       )
       .then((res) => {
         console.log(res.data.data);

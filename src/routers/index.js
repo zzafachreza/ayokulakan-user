@@ -73,6 +73,12 @@ import {
   Kurir,
   Kurs,
   Cuaca,
+  PpobPdam,
+  PpobTv,
+  PpobInternet,
+  PpobTelepon,
+  PpobBpjs,
+  CategoryProductUtama,
 } from '../pages';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigator} from '../components';
@@ -371,6 +377,57 @@ export default function Router() {
       />
 
       <Stack.Screen
+        name="PpobPdam"
+        component={PpobPdam}
+        options={({route, navigation}) => ({
+          title: 'PDAM',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#16A858',
+            elevation: 0, // remove shadow on Android
+          },
+        })}
+      />
+
+      <Stack.Screen
+        name="PpobTv"
+        component={PpobTv}
+        options={({route, navigation}) => ({
+          title: 'TV BERLANGGANAN',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#16A858',
+            elevation: 0, // remove shadow on Android
+          },
+        })}
+      />
+
+      <Stack.Screen
+        name="PpobInternet"
+        component={PpobInternet}
+        options={({route, navigation}) => ({
+          title: 'INTERNET',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#16A858',
+            elevation: 0, // remove shadow on Android
+          },
+        })}
+      />
+      <Stack.Screen
+        name="PpobTelepon"
+        component={PpobTelepon}
+        options={({route, navigation}) => ({
+          title: 'TELEPON RUMAH',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#16A858',
+            elevation: 0, // remove shadow on Android
+          },
+        })}
+      />
+
+      <Stack.Screen
         name="PulsaDetail"
         component={PulsaDetail}
         options={({route, navigation}) => ({
@@ -414,6 +471,19 @@ export default function Router() {
         component={PpobGame}
         options={({route, navigation}) => ({
           title: 'GAME VOUCHER',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#16A858',
+            elevation: 0, // remove shadow on Android
+          },
+        })}
+      />
+
+      <Stack.Screen
+        name="PpobBpjs"
+        component={PpobBpjs}
+        options={({route, navigation}) => ({
+          title: 'BPJS KESEHATAN',
           headerTintColor: 'white',
           headerStyle: {
             backgroundColor: '#16A858',
@@ -813,6 +883,23 @@ export default function Router() {
       <Stack.Screen
         name="CategoryProduct"
         component={CategoryProduct}
+        // options={{
+        //   headerTitle: 'Search',
+
+        // }}
+        options={({route, navigation}) => ({
+          title: route.params.name,
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#16A858',
+            elevation: 0, // remove shadow on Android
+          },
+        })}
+      />
+
+      <Stack.Screen
+        name="CategoryProductUtama"
+        component={CategoryProductUtama}
         // options={{
         //   headerTitle: 'Search',
 

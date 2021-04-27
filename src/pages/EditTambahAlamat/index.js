@@ -1,10 +1,18 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import {MyInput, MyGap, MyButton} from '../../components';
-import {colors} from '../../utils';
+import {colors, getData} from '../../utils';
 
 export default function EditTambahAlamat() {
   const [alamat, setAlamat] = useState('');
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    getData('users').then((res) => {
+      console.log(res);
+      setUser(res);
+    });
+  }, []);
 
   const _saveData = () => {
     console.log(alamat);

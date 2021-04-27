@@ -5,7 +5,7 @@ import {colors, fonts} from '../../utils';
 import {Icon} from 'react-native-elements';
 import axios from 'axios';
 
-export default function PpobPdam() {
+export default function PpobTv() {
   const [key, setKey] = useState('');
   const [lokasi, setLokasi] = useState('');
   const [data, setData] = useState([]);
@@ -54,15 +54,16 @@ export default function PpobPdam() {
               left: 10,
               fontSize: 16,
             }}>
-            Pilih lokasi :
+            Pilih langganan :
           </Text>
         </View>
         <Picker
           selectedValue={lokasi}
           onValueChange={(itemValue) => setLokasi(itemValue)}>
-          {data.map((item) => {
-            return <Picker.Item label={item.name} value={item.code} />;
-          })}
+          <Picker.Item label="BIG TV" value="BIG TV" />
+          <Picker.Item label="INDOVISION" value="INDOVISION" />
+          <Picker.Item label="NEX MEDIA" value="NEX MEDIA" />
+          <Picker.Item label="TELKOMVISION" value="TELKOMVISION" />
         </Picker>
         <MyGap jarak={10} />
         <MyButton onPress={_cek} warna={colors.secondary} title="CEK" />
