@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,50 +11,21 @@ import {
 import {colors} from '../../utils/colors';
 import {fonts} from '../../utils/fonts';
 import {Icon} from 'react-native-elements';
+import axios from 'axios';
 
 export default function Lapak({navigation, route}) {
-  const dataBarangLapak = [
-    {
-      id: 1,
-      title: 'Gerobah Kuliner',
-      image:
-        'https://ayokulakan.com/storage/img_rental/pD9zff0e7CrU0m2ZY7sKORZ08LmPygbDUq1MyI6t.jpeg',
-      harga: 'Rp. 500.000',
-      nilai: 4,
-      jml: 10,
-      lokasi: 'Jawa Barat',
-    },
-    {
-      id: 2,
-      title: 'Gerobak besi galvalum',
-      image:
-        'https://ayokulakan.com/storage/img_rental/6cmXsySgNMBjb9W63wkAhi6w8oIUBPyBFxMSLiB6.jpeg',
-      harga: 'Rp. 1.000.000',
-      lokasi: 'Jawa Timur',
-      nilai: 1,
-      jml: 22,
-    },
-    {
-      id: 3,
-      title: 'Alat Peras Susu Sapi',
-      image:
-        'https://ayokulakan.com/storage/img_rental/L8QaoZXL4Ed9vJSKy0Rjp3akiWopRblyPWcRFATv.jpeg',
-      harga: 'Rp. 250.000',
-      lokasi: 'Jakarta barat',
-      nilai: 3,
-      jml: 1,
-    },
-    {
-      id: 4,
-      title: 'Canon 100D Touch Screen',
-      image:
-        'https://ayokulakan.com/storage/img_rental/5xMQToJfLnOjjO4TuWdvR6FsWJ3XzUYE5oR609kV.jpeg',
-      harga: 'Rp. 70.000',
-      lokasi: 'Jawa Timur',
-      nilai: 5,
-      jml: 20,
-    },
-  ];
+  useEffect(() => {
+    axios
+      .get(
+        'https://ayokulakan.com/api/barang?includes=creator,attachments&id_trans_lapak=' +
+          route.params.id,
+      )
+      .then((res) => {
+        console.log(res.data.data);
+        setData(res.data.data);
+      });
+  }, []);
+  const [data, setData] = useState([]);
   const Bintang = ({nilai}) => {
     var myBintang = [];
 
@@ -75,78 +46,53 @@ export default function Lapak({navigation, route}) {
     return <>{myBintang}</>;
   };
 
-  const renderItemLapak = ({item}) => (
-    <TouchableOpacity
-      style={styles.card}
-      onPress={() =>
-        navigation.navigate('Product', {
-          product: item,
-        })
-      }
-      activeOpacity={1.0}>
-      <Image style={styles.image} source={{uri: item.image}} />
-      <View style={styles.detailsContainer}>
-        <View
-          style={{
-            flex: 1,
-          }}>
-          <Text style={styles.title}>{item.harga}</Text>
-        </View>
-        <View
-          style={{
-            flex: 1,
-          }}>
-          <Text style={styles.subTitle}>{item.title}</Text>
-        </View>
-        <View
-          style={{
-            flex: 1,
-            marginTop: 10,
-            // backgroundColor: 'red',
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
-          <Icon type="font-awesome" name="map-marker" color="green" size={12} />
-          <Text
-            style={{
-              fontFamily: 'Nunito-Light',
-              fontSize: 12,
-              left: 5,
-              color: '#000',
-            }}>
-            {item.lokasi}
-          </Text>
-        </View>
-        <View
-          style={{
-            marginTop: 10,
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
+  const renderItem = ({item}) => {
+    let uri = '';
+    if (item.attachments[0]) {
+      uri = 'https://ayokulakan.com/storage/' + item.attachments[0].url;
+    } else {
+      uri = 'https://ayokulakan.com/img/no-images.png';
+    }
+
+    return (
+      <TouchableOpacity
+        style={styles.card}
+        onPress={() =>
+          navigation.navigate('Product', {
+            product: item,
+          })
+        }
+        activeOpacity={1.0}>
+        <Image style={styles.image} source={{uri: uri}} />
+        <View style={styles.detailsContainer}>
           <View
             style={{
+              flex: 1,
+            }}>
+            <Text style={styles.title}>
+              Rp. {new Intl.NumberFormat().format(item.harga_barang)}
+            </Text>
+          </View>
+          <View
+            style={{
+              flex: 1,
+            }}>
+            <Text style={styles.subTitle}>{item.nama_barang}</Text>
+          </View>
+
+          <View
+            style={{
+              marginTop: 10,
               flexDirection: 'row',
               alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
-            {/* bintang */}
-            <Bintang nilai={item.nilai} />
-          </View>
-          <Text
-            style={{
-              fontFamily: 'Montserrat-Light',
-              fontSize: 12,
-              left: 5,
-              color: '#000',
-            }}>
-            ( {item.jml} )
-          </Text>
+            }}></View>
         </View>
-      </View>
-    </TouchableOpacity>
-  );
+      </TouchableOpacity>
+    );
+  };
 
   const lapak = route.params;
+  console.log(lapak);
   return (
     <>
       <View
@@ -210,8 +156,8 @@ export default function Lapak({navigation, route}) {
           }}>
           <FlatList
             numColumns={2}
-            data={dataBarangLapak}
-            renderItem={renderItemLapak}
+            data={data}
+            renderItem={renderItem}
             keyExtractor={(item) => item.id}
           />
         </ScrollView>

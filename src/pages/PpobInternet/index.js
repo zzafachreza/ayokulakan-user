@@ -35,7 +35,7 @@ export default function PpobInternet() {
           value={key}
           autoFocus
           keyboardType="number-pad"
-          label="Masukakn Nomor ID Pelanggan"
+          label="Masukan Nomor ID Pelanggan"
           iconname="calculator-outline"
           onChangeText={(value) => setKey(value)}
         />

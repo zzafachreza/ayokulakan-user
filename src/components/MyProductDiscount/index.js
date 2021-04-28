@@ -3,67 +3,55 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView,
-  FlatList,
-  Dimensions,
-  TouchableWithoutFeedback,
+  ImageBackground,
   TouchableOpacity,
   Image,
+  FlatList,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
-import {colors} from '../../utils/colors';
-import {fonts} from '../../utils/fonts';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
-import {useSelector} from 'react-redux';
-
-const Bintang = ({nilai}) => {
-  var myBintang = [];
-
-  for (let i = 0; i < 5; i++) {
-    myBintang.push(
-      <View key={i}>
-        <Icon
-          type="font-awesome"
-          name="star"
-          color={i < nilai ? '#F8B459' : '#C7C7C7'}
-          style={{marginHorizontal: 2}}
-          size={12}
-        />
-      </View>,
-    );
-  }
-
-  return <>{myBintang}</>;
-};
+import {colors} from '../../utils';
 
 export default function MyProductDiscount() {
-  const getData = () => {
+  useEffect(() => {
     axios
       .get(
-        'https://ayokulakan.com/api/barang?disc_barang!=null&includes=creator,attachments',
+        'https://ayokulakan.com/api/barang?limit=11&includes=creator,attachments&disc_barang!=null',
       )
       .then((res) => {
-        console.log('data diskon', res.data.data);
+        console.log(res.data.data);
         setData(res.data.data);
       });
-  };
-  useEffect(() => {
-    getData();
   }, []);
 
   const navigation = useNavigation();
-
   const [data, setData] = useState([]);
 
-  const windowWidth = Dimensions.get('window').width;
-  const windowHeight = Dimensions.get('window').height;
+  const Bintang = ({nilai}) => {
+    var myBintang = [];
+
+    for (let i = 0; i < 5; i++) {
+      myBintang.push(
+        <View key={i}>
+          <Icon
+            type="font-awesome"
+            name="star"
+            color={i < nilai ? '#F8B459' : '#C7C7C7'}
+            style={{marginHorizontal: 2}}
+            size={12}
+          />
+        </View>,
+      );
+    }
+
+    return <>{myBintang}</>;
+  };
 
   const renderItem = ({item}) => {
     let uri = '';
-
     if (item.attachments[0]) {
       uri = 'https://ayokulakan.com/storage/' + item.attachments[0].url;
     } else {
@@ -72,130 +60,49 @@ export default function MyProductDiscount() {
 
     return (
       <TouchableOpacity
+        style={styles.card}
         onPress={() =>
           navigation.navigate('Product', {
             product: item,
           })
         }
         activeOpacity={1.0}>
-        <View
-          style={{
-            width: windowWidth / 2 - 20,
-            shadowColor: 'white',
-            shadowColor: '#000',
-            shadowOffset: {
-              width: -10,
-              height: 2,
-            },
-            shadowOpacity: 0.44,
-            shadowRadius: 5.32,
-
-            elevation: 5,
-
-            borderRadius: 15,
-            overflow: 'hidden',
-            backgroundColor: 'white',
-            marginBottom: 10,
-            marginTop: 10,
-            flex: 1,
-
-            marginHorizontal: 5,
-          }}>
-          <Image style={styles.image} source={{uri: uri}} />
+        <Image style={styles.image} source={{uri: uri}} />
+        <View style={styles.detailsContainer}>
           <View
             style={{
-              backgroundColor: colors.secondary,
-              position: 'absolute',
-              top: '10%',
-              padding: 5,
-              paddingHorizontal: 10,
+              flex: 1,
             }}>
-            <Text
-              style={{
-                color: 'white',
-                fontFamily: fonts.primary[400],
-              }}>
-              {item.disc_barang}
+            <Text style={styles.title}>
+              Rp. {new Intl.NumberFormat().format(item.harga_barang)}
             </Text>
           </View>
-          <View style={styles.detailsContainer}>
-            <View
-              style={{
-                flex: 1,
-              }}>
-              <Text style={styles.title}>
-                Rp. {new Intl.NumberFormat().format(item.harga_barang)}
-              </Text>
-            </View>
-            <View
-              style={{
-                flex: 1,
-              }}>
-              <Text style={styles.subTitle}>{item.nama_barang}</Text>
-            </View>
-            <View
-              style={{
-                flex: 1,
-                marginTop: 10,
-                // backgroundColor: 'red',
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
-              <Icon
-                type="font-awesome"
-                name="map-marker"
-                color="green"
-                size={12}
-              />
-              <Text
-                style={{
-                  fontFamily: 'Nunito-Light',
-                  fontSize: 12,
-                  left: 5,
-                  color: '#000',
-                }}>
-                {item.creator.alamat}
-              </Text>
-            </View>
-            <View
-              style={{
-                marginTop: 10,
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}>
-                {/* bintang */}
-                <Bintang nilai={5} />
-              </View>
-              <Text
-                style={{
-                  fontFamily: 'Montserrat-Light',
-                  fontSize: 12,
-                  left: 5,
-                  color: '#000',
-                }}>
-                ( {10} )
-              </Text>
-            </View>
+          <View
+            style={{
+              flex: 1,
+            }}>
+            <Text style={styles.subTitle}>{item.nama_barang}</Text>
           </View>
+
+          <View
+            style={{
+              marginTop: 10,
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}></View>
         </View>
       </TouchableOpacity>
     );
   };
 
   return (
-    <ScrollView showsHorizontalScrollIndicator={false} horizontal>
+    <View>
       <View
         style={{
+          flex: 1,
           padding: 10,
-          backgroundColor: 'white',
+          backgroundColor: '#FFF',
         }}>
-        <Text>test</Text>
         <FlatList
           horizontal
           data={data}
@@ -203,7 +110,7 @@ export default function MyProductDiscount() {
           keyExtractor={(item) => item.id}
         />
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
@@ -231,7 +138,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   image: {
-    width: '100%',
+    width: 180,
     height: 200,
   },
   detailsContainer: {
