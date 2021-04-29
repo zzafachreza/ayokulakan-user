@@ -86,10 +86,10 @@ export default function App() {
       channelId: 'ayokulakan', // (required)
       channelName: 'My channel', // (required)
       channelDescription: 'A channel to categorise your notifications', // (optional) default: undefined.
-      playSound: true, // (optional) default: true
-      soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
+      playSound: true, // (optional) default: true // (optional) See `soundName` parameter of `localNotification` function
       importance: 4, // (optional) default: 4. Int value of the Android notification importance
       vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
+      soundName: 'shalat.wav',
     },
     (created) => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
   );
@@ -120,10 +120,11 @@ export default function App() {
         console.log('permissions', permissions);
         if (permissions.alert === true) {
           PushNotification.localNotification({
-            channelId: 'ayokulakan-user',
+            channelId: 'ayokulakan',
             title: obj.notification.title,
             message: obj.notification.body,
             playSound: true,
+            soundName: 'shalat.wav',
           });
         }
       });

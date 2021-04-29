@@ -78,7 +78,7 @@ export default function Splash({navigation}) {
 
     setTimeout(() => {
       requestLocationPermission();
-      navigation.replace('MainApp');
+      // navigation.replace('MainApp');
     }, 3000);
   }, []);
 
