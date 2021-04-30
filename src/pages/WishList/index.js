@@ -19,6 +19,7 @@ import {MyButton} from '../../components';
 import {showMessage} from 'react-native-flash-message';
 import {useDispatch, useSelector} from 'react-redux';
 import {setForm, setLoading, setUsers} from '../../redux';
+import HTML from 'react-native-render-html';
 
 const wait = (timeout) => {
   return new Promise((resolve) => {
@@ -26,52 +27,48 @@ const wait = (timeout) => {
   });
 };
 export default function WishList({navigation, route}) {
-  getData('users').then((res) => {
-    console.log(res);
-
-    if (!res) {
-      alert('Anda Harus Login Terlebih dahulu !');
-      navigation.goBack();
-    } else {
-      const UsersGlobal = useSelector((state) => state.reducerUsers);
-      axios
-        .get(
-          'https://ayokulakan.com/api/like?user_id=' +
-            UsersGlobal.data.id +
-            '&includes=creator,form,form.attachments',
-        )
-        .then((res) => {
-          console.log(res.data.data);
-          setData(res.data.data);
-        });
-    }
-  });
-
   const [refreshing, setRefreshing] = React.useState(false);
   const [data, setData] = useState([]);
+  const [user, setUsers] = useState({});
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
+
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
+  useEffect(() => {
+    getData('users').then((res) => {
+      console.log(res);
+
+      if (!res) {
+        alert('Anda Harus Login Terlebih dahulu !');
+        navigation.goBack();
+      } else {
+        setUsers(res);
+        __getData(res.id);
+      }
+    });
+  }, []);
+
+  const __getData = (id) => {
     axios
       .get(
         'https://ayokulakan.com/api/like?user_id=' +
-          UsersGlobal.data.id +
+          id +
           '&includes=creator,form,form.attachments',
       )
       .then((res) => {
         console.log(res.data.data);
         setData(res.data.data);
       });
-    wait(2000).then(() => setRefreshing(false));
-  }, []);
-
-  useEffect(() => {}, []);
+  };
 
   const hapusFav = (id) => {
     console.log('https://ayokulakan.com/api/like/' + id);
     axios.delete('https://ayokulakan.com/api/like/' + id).then((res) => {
       console.log(res);
-      getDataFav();
+      __getData(id);
       showMessage({
         message: res.data.message,
         type: 'success',
@@ -110,7 +107,7 @@ export default function WishList({navigation, route}) {
               style={{
                 flex: 1,
                 width: '100%',
-                resizeMode: 'contain',
+                // resizeMode: 'contain',
                 aspectRatio: 1,
               }}
             />
@@ -135,21 +132,14 @@ export default function WishList({navigation, route}) {
               }}>
               {item.form.nama_barang}
             </Text>
-            <Text
-              style={{
-                fontSize: 18,
-                fontFamily: 'Montserrat-Medium',
-                color: 'black',
-              }}>
-              {item.form.deskripsi_barang}
-            </Text>
+            <HTML source={{html: item.form.deskripsi_barang}} />
+            <MyButton
+              onPress={() => hapusFav(item.id)}
+              title="Hapus Dari Favorit"
+              warna={colors.danger}
+              Icons="trash"
+            />
           </View>
-          <MyButton
-            onPress={() => hapusFav(item.id)}
-            title="Hapus Dari Favorit"
-            warna={colors.danger}
-            Icons="trash"
-          />
         </View>
       </View>
     );

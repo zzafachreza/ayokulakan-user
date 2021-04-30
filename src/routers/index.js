@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  Share,
   View,
   Dimensions,
 } from 'react-native';
@@ -946,8 +947,8 @@ export default function Router() {
                 <Icon name="heart" type="ionicon" color="white" size={20} />
               </TouchableOpacity>
 
-              <TouchableOpacity
-                onPress={() => navigation.replace('MainApp')}
+              {/* <TouchableOpacity
+                onPress={onShare}
                 style={{
                   position: 'relative',
                   padding: 5,
@@ -959,7 +960,7 @@ export default function Router() {
                   color="white"
                   size={20}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
               <TouchableOpacity
                 onPress={() => navigation.navigate('Cart')}
                 style={{

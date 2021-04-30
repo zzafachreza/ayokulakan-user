@@ -5,6 +5,7 @@ import {
   View,
   SafeAreaView,
   Image,
+  Share,
   TouchableOpacity,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -278,6 +279,25 @@ export default function Produk({navigation, route}) {
     }
   };
 
+  const onShare = async (desc) => {
+    try {
+      const result = await Share.share({
+        message: desc,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   return (
     <SafeAreaView
       style={{
@@ -318,16 +338,36 @@ export default function Produk({navigation, route}) {
                 margin: 20,
                 // height: 600,
               }}>
-              <Text
-                style={{
-                  marginBottom: 7,
-                  fontFamily: 'Montserrat-ExtraBold',
-                  fontSize: 20,
-                  color: '#F8781D',
-                }}>
-                Rp. {new Intl.NumberFormat().format(product.harga_barang)}
-                {/* {token} */}
-              </Text>
+              <View style={{flexDirection: 'row'}}>
+                <Text
+                  style={{
+                    flex: 1,
+                    marginBottom: 7,
+                    fontFamily: 'Montserrat-ExtraBold',
+                    fontSize: 20,
+                    color: '#F8781D',
+                  }}>
+                  Rp. {new Intl.NumberFormat().format(product.harga_barang)}
+                  {/* {token} */}
+                </Text>
+                <TouchableOpacity
+                  onPress={() =>
+                    onShare('https://ayokulakan.com/sc/barang/' + product.id)
+                  }
+                  style={{
+                    // position: 'relative',
+                    padding: 5,
+                    marginHorizontal: 5,
+                  }}>
+                  <Icon
+                    name="share-social"
+                    type="ionicon"
+                    color={colors.primary}
+                    size={20}
+                  />
+                </TouchableOpacity>
+              </View>
+
               <Text
                 style={{
                   marginBottom: 7,
