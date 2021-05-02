@@ -71,6 +71,8 @@ import PpobTelepon from './PpobTelepon';
 import PpobBpjs from './PpobBpjs';
 import CategoryProductUtama from './CategoryProductUtama';
 
+import PulsaPayment from './PulsaPayment';
+
 export {
   Splash,
   GetStarted,
@@ -142,4 +144,5 @@ export {
   PpobTelepon,
   PpobBpjs,
   CategoryProductUtama,
+  PulsaPayment,
 };

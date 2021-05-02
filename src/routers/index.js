@@ -80,6 +80,7 @@ import {
   PpobTelepon,
   PpobBpjs,
   CategoryProductUtama,
+  PulsaPayment,
 } from '../pages';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigator} from '../components';
@@ -369,6 +370,19 @@ export default function Router() {
         component={Pulsa}
         options={({route, navigation}) => ({
           title: 'PULSA',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#16A858',
+            elevation: 0, // remove shadow on Android
+          },
+        })}
+      />
+
+      <Stack.Screen
+        name="PulsaPayment"
+        component={PulsaPayment}
+        options={({route, navigation}) => ({
+          title: 'PULSA PAYMENT',
           headerTintColor: 'white',
           headerStyle: {
             backgroundColor: '#16A858',

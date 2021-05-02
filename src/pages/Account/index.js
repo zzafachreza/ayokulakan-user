@@ -73,7 +73,7 @@ export default function Account({navigation}) {
   };
 
   const inputData = () => {
-    // dispatch(setLoading(true));
+    dispatch(setLoading(true));
     axios
       .post('https://ayokulakan.com/api/login', LoginGlobal.form)
       .then((res) => {
@@ -82,9 +82,9 @@ export default function Account({navigation}) {
           storeData('users', res.data.data);
           dispatch(setUsers('data', res.data.data));
           setIsLogin(true);
-          // dispatch(setLoading(false));
+          dispatch(setLoading(false));
         } else {
-          // dispatch(setLoading(false));
+          dispatch(setLoading(false));
           showMessage({
             type: 'danger',
             message: res.data.message,
@@ -104,9 +104,9 @@ export default function Account({navigation}) {
           storeData('users', res.data.data);
           dispatch(setUsers('data', res.data.data));
           setIsLogin(true);
-          // dispatch(setLoading(false));
+          dispatch(setLoading(false));
         } else {
-          // dispatch(setLoading(false));
+          dispatch(setLoading(false));
           showMessage({
             type: 'danger',
             message: res.data.message,

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -12,16 +12,30 @@ import {
 } from 'react-native';
 import {MyInput} from '../../components';
 import axios from 'axios';
-import {colors, fonts} from '../../utils';
+import {colors, fonts, getData} from '../../utils';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 
 export default function Pulsa({navigation, route}) {
+  const [user, setUsers] = useState({});
+  useEffect(() => {
+    getData('users').then((res) => {
+      console.log(res);
+
+      if (!res) {
+        alert('Anda Harus Login Terlebih dahulu !');
+        navigation.navigate('Account');
+      } else {
+        setUsers(res);
+      }
+    });
+  }, []);
+
   const [nomor, setNomor] = useState('');
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const getData = (val) => {
+  const __getData = (val) => {
     setLoading(true);
     axios
       .get(
@@ -90,7 +104,7 @@ export default function Pulsa({navigation, route}) {
           value={nomor}
           keyboardType="number-pad"
           onChangeText={(value) => setNomor(value)}
-          onSubmitEditing={getData}
+          onSubmitEditing={__getData}
         />
         {/* <Text>{nomor.substring(0, 4)}</Text> */}
       </View>

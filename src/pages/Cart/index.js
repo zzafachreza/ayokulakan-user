@@ -45,7 +45,7 @@ export default function Cart({navigation}) {
       setUser(res);
       if (!res) {
         alert('Anda Harus Login Terlebih dahulu !');
-        navigation.goBack();
+        navigation.navigation('Account');
       }
       getCart(res.id);
     });
@@ -58,7 +58,7 @@ export default function Cart({navigation}) {
       setUser(res);
       if (!res) {
         alert('Anda Harus Login Terlebih dahulu !');
-        navigation.goBack();
+        navigation.navigation('Account');
       }
       getCart(res.id);
     });
