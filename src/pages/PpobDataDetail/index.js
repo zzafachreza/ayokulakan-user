@@ -6,7 +6,7 @@ import 'intl/locale-data/jsonp/en';
 import {MyButton} from '../../components';
 import {color} from 'react-native-reanimated';
 
-export default function PpobDataDetail({route}) {
+export default function PpobDataDetail({navigation, route}) {
   const item = route.params.item;
   console.log(item);
   return (
@@ -79,7 +79,7 @@ export default function PpobDataDetail({route}) {
         <MyButton
           title="BELI SEKARANG"
           warna={colors.primary}
-          onPress={() => alert('Tinggal Koneksi ke Midtrans')}
+          onPress={() => navigation.navigate('PpobDataPayment', item)}
         />
       </View>
     </SafeAreaView>

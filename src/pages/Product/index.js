@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
   StyleSheet,
   Text,
@@ -16,10 +16,12 @@ import {setForm, setLoading, setUsers, setCart} from '../../redux';
 import {showMessage} from 'react-native-flash-message';
 import {getData, storeData} from '../../utils/localStorage';
 import axios from 'axios';
-import {colors} from '../../utils';
+import {colors, fonts} from '../../utils';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
+import {MyInput} from '../../components';
 import HTML from 'react-native-render-html';
+import RBSheet from 'react-native-raw-bottom-sheet';
 
 const ListProduct = ({icon, title, desc}) => {
   const Bintang = ({nilai}) => {
@@ -169,6 +171,17 @@ export default function Produk({navigation, route}) {
   const dataGlobal = useSelector((state) => state.reducerTools);
   const UsersGlobal = useSelector((state) => state.reducerUsers);
 
+  const [kirim, setKirim] = useState({
+    user_id: UsersGlobal.data.id,
+    id_barang: 0,
+    created_by: UsersGlobal.data.id,
+    jumlah_barang: 1,
+    form_id: 0,
+    form_type: 'img_barang',
+  });
+
+  const [harga, setHarga] = useState(0);
+
   const [lapak, setLapak] = useState({});
 
   const dispatch = useDispatch();
@@ -206,6 +219,13 @@ export default function Produk({navigation, route}) {
               res.data.data[0].kota.kota +
               ', ' +
               res.data.data[0].provinsi.provinsi,
+          });
+
+          setHarga(product.harga_barang);
+          setKirim({
+            ...kirim,
+            id_barang: product.id,
+            form_id: product.id,
           });
         } else {
           setLapak({
@@ -245,18 +265,12 @@ export default function Produk({navigation, route}) {
 
   //add to cart
 
-  const addToCart = (id) => {
+  const addToCart = () => {
     // console.log(user.id);
 
+    refRBSheet.current.close();
+
     try {
-      const kirim = {
-        user_id: UsersGlobal.data.id,
-        id_barang: id,
-        created_by: UsersGlobal.data.id,
-        jumlah_barang: 1,
-        form_id: id,
-        form_type: 'img_barang',
-      };
       console.log(kirim);
       axios
         .post('https://ayokulakan.com/api/favorit-barang', kirim, {
@@ -298,6 +312,8 @@ export default function Produk({navigation, route}) {
     }
   };
 
+  const refRBSheet = useRef();
+
   return (
     <SafeAreaView
       style={{
@@ -308,6 +324,123 @@ export default function Produk({navigation, route}) {
           flex: 1,
         }}>
         <ScrollView>
+          <RBSheet
+            ref={refRBSheet}
+            closeOnDragDown={true}
+            closeOnPressMask={false}
+            customStyles={{
+              wrapper: {
+                backgroundColor: 'transparent',
+              },
+              draggableIcon: {
+                backgroundColor: '#000',
+              },
+            }}>
+            <View
+              style={{
+                padding: 10,
+              }}>
+              {/* <Text
+                style={{
+                  marginBottom: 7,
+                  fontFamily: 'Montserrat-ExtraBold',
+                  fontSize: 20,
+                  color: '#000',
+                }}>
+                {product.nama_barang}
+              </Text> */}
+              <Text
+                style={{
+                  marginBottom: 7,
+                  fontFamily: 'Montserrat-ExtraBold',
+                  fontSize: 14,
+                  color: colors.primary,
+                }}>
+                Masukan Jumlah
+              </Text>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  padding: 10,
+                  flexDirection: 'row',
+                }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    if (kirim.jumlah_barang == 1) {
+                      alert('pembelian minimal 1');
+                    } else {
+                      setKirim({
+                        ...kirim,
+                        jumlah_barang: kirim.jumlah_barang - 1,
+                      });
+                      setHarga(
+                        product.harga_barang * (kirim.jumlah_barang - 1),
+                      );
+                    }
+                  }}
+                  style={{
+                    padding: 10,
+                    backgroundColor: colors.secondary,
+                    borderRadius: 10,
+                    marginHorizontal: 20,
+                  }}>
+                  <Icon type="ionicon" name="remove" color={colors.white} />
+                </TouchableOpacity>
+                <Text
+                  style={{
+                    fontFamily: fonts.secondary[600],
+                    fontSize: 50,
+                    color: colors.black,
+                  }}>
+                  {kirim.jumlah_barang}
+                </Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    setKirim({
+                      ...kirim,
+                      jumlah_barang: kirim.jumlah_barang + 1,
+                    });
+
+                    setHarga(product.harga_barang * (kirim.jumlah_barang + 1));
+                  }}
+                  style={{
+                    padding: 10,
+                    backgroundColor: colors.secondary,
+                    borderRadius: 10,
+                    marginHorizontal: 20,
+                  }}>
+                  <Icon type="ionicon" name="add" color={colors.white} />
+                </TouchableOpacity>
+              </View>
+              {/* <MyInput label="masukan deskripsi" /> */}
+
+              <TouchableOpacity
+                onPress={() => {
+                  // alert(product.id);
+                  addToCart();
+                  // dispatch(setCart(0));
+                }}
+                activeOpacity={1}
+                style={{
+                  backgroundColor: '#16A858',
+                  padding: 20,
+                  borderRadius: 10,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    // left: 20,
+                    color: '#FFF',
+                    fontFamily: 'Montserrat-Regular',
+                  }}>
+                  Tambahkan - Rp. {new Intl.NumberFormat().format(harga)}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </RBSheet>
           <View>
             <View>
               <FastImage
@@ -560,8 +693,9 @@ export default function Produk({navigation, route}) {
         <TouchableOpacity
           onPress={() => {
             // alert(product.id);
-            addToCart(product.id);
+            // addToCart(product.id);
             // dispatch(setCart(0));
+            refRBSheet.current.open();
           }}
           activeOpacity={1}
           style={{
@@ -579,7 +713,7 @@ export default function Produk({navigation, route}) {
               color: '#FFF',
               fontFamily: 'Montserrat-SemiBold',
             }}>
-            Tambahkan Keranjang
+            Beli
           </Text>
         </TouchableOpacity>
       </View>

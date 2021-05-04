@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {MyInput, MyGap, MyButton} from '../../components';
-import {colors, fonts} from '../../utils';
+import {colors, fonts, getData} from '../../utils';
 import axios from 'axios';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
@@ -26,8 +26,19 @@ export default function PpobPlnToken({navigation}) {
     _getData();
   };
 
+  const [user, setUsers] = useState({});
   useEffect(() => {
     _getTokenPln();
+    getData('users').then((res) => {
+      console.log(res);
+
+      if (!res) {
+        alert('Anda Harus Login Terlebih dahulu !');
+        navigation.navigate('Account');
+      } else {
+        setUsers(res);
+      }
+    });
   }, []);
 
   const _getTokenPln = () => {
@@ -134,6 +145,9 @@ export default function PpobPlnToken({navigation}) {
               {data.map((item) => {
                 return (
                   <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('PpobPlnTokenDetail', item)
+                    }
                     style={{
                       marginVertical: 10,
                       borderWidth: 1,

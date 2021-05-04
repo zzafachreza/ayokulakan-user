@@ -9,7 +9,7 @@ import {
 import WebView from 'react-native-webview';
 import {getData} from '../../utils';
 
-export default function PpobPlnMeteranDetail({route}) {
+export default function PpobDataPayment({route}) {
   const [user, setUser] = useState({});
   const [visible, setVisible] = useState(true);
 
@@ -29,11 +29,10 @@ export default function PpobPlnMeteranDetail({route}) {
 
   const item = route.params;
   console.log(item);
-  const pulsa_code = item.pulsa_code;
 
-  const produk = item.hp + ' - ' + item.tr_name + ' - ' + item.period;
-  const harga = item.price;
-  const myUrl = `https://ayokulakan.com/v1/midtrans/payment/snap/index.php?produk=${produk}&harga=${harga}&nama_lengkap=${nama_lengkap}&email=${email}&telepon=${telepon}&alamat=${alamat}&pulsa_code=${pulsa_code}`;
+  const produk = item.pulsa_type + ' - ' + item.pulsa_nominal;
+  const harga = item.pulsa_price;
+  const myUrl = `https://ayokulakan.com/v1/midtrans/payment/snap/index.php?produk=${produk}&harga=${harga}&nama_lengkap=${nama_lengkap}&email=${email}&telepon=${telepon}&alamat=${alamat}`;
 
   console.log(myUrl);
   return (

@@ -99,6 +99,21 @@ export default function Cart({navigation}) {
     });
   };
 
+  const amount = (item) => {
+    return item.form.harga_barang;
+  };
+
+  const sum = (prev, next) => {
+    return prev + next;
+  };
+
+  var sub = 0;
+  data.map((item) => {
+    sub += item.form.harga_barang * item.jumlah_barang;
+
+    console.log(sub);
+  });
+
   const hapus = (id) => {
     console.log('haspu cart');
     dispatch(setCart(-1));
@@ -110,12 +125,9 @@ export default function Cart({navigation}) {
       });
   };
 
-  var subtotal = 0;
-
   const _renderItem = ({item, index}) => {
     // console.log(item.image);
     let uri = '';
-    subtotal += item.jumlah_barang * item.harga_barang;
 
     if (item.form.attachments[0]) {
       uri = 'https://ayokulakan.com/storage/' + item.form.attachments[0].url;
@@ -125,7 +137,6 @@ export default function Cart({navigation}) {
     }
 
     let jumlah = item.jumlah_barang;
-    subtotal = +jumlah * item.form.harga_barang;
 
     return (
       <View
@@ -342,7 +353,7 @@ export default function Cart({navigation}) {
               fontFamily: fonts.secondary[600],
               left: 10,
             }}>
-            Rp. {new Intl.NumberFormat().format(total)}
+            Rp. {new Intl.NumberFormat().format(sub)}
           </Text>
         </View>
         <TouchableOpacity

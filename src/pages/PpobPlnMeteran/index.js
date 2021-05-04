@@ -18,7 +18,7 @@ export default function PpobPlnMeteran({navigation}) {
   const [loading, setLoading] = useState(false);
   const [item, setItem] = useState({});
   const [status, setStatus] = useState(false);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
 
   const _cek = () => {
     // alert(key);
@@ -26,25 +26,14 @@ export default function PpobPlnMeteran({navigation}) {
     _getData();
   };
 
-  useEffect(() => {
-    _getTokenPln();
-  }, []);
-
-  const _getTokenPln = () => {
-    axios
-      .get('https://ayokulakan.com/api/ppob/list?pulsa_type=pln&limit=0')
-      .then((res) => {
-        console.log(res.data.data);
-        setData(res.data.data);
-      });
-  };
+  useEffect(() => {}, []);
 
   const _getData = () => {
     axios
       .get(
-        'https://ayokulakan.com/api/ppob/pasca/plnprabayar?hp=' +
+        'https://ayokulakan.com/api/ppob/pasca?ppob_pelanggan=' +
           key +
-          '&type=pln',
+          '&type=PLNPOSTPAID',
       )
       .then((res) => {
         setLoading(false);
@@ -92,7 +81,7 @@ export default function PpobPlnMeteran({navigation}) {
                 fontFamily: fonts.secondary[600],
                 fontSize: 16,
               }}>
-              {item.meter_no}
+              {item.hp}
             </Text>
             <Text
               style={{
@@ -106,61 +95,82 @@ export default function PpobPlnMeteran({navigation}) {
                 fontFamily: fonts.secondary[600],
                 fontSize: 16,
               }}>
-              {item.name}
+              {item.tr_name}
             </Text>
             <Text
               style={{
                 fontFamily: fonts.secondary[400],
                 fontSize: 16,
               }}>
-              Keterangan :
+              Periode :
             </Text>
             <Text
               style={{
                 fontFamily: fonts.secondary[600],
                 fontSize: 16,
               }}>
-              {item.segment_power}
+              {item.period}
             </Text>
-            <View>
+            <Text
+              style={{
+                fontFamily: fonts.secondary[400],
+                fontSize: 16,
+              }}>
+              Kewajiban Bayar :
+            </Text>
+            <Text
+              style={{
+                fontFamily: fonts.secondary[600],
+                fontSize: 16,
+              }}>
+              {new Intl.NumberFormat().format(item.nominal)}
+            </Text>
+            <Text
+              style={{
+                fontFamily: fonts.secondary[400],
+                fontSize: 16,
+              }}>
+              Biaya Admin :
+            </Text>
+            <Text
+              style={{
+                fontFamily: fonts.secondary[600],
+                fontSize: 16,
+              }}>
+              {new Intl.NumberFormat().format(item.admin)}
+            </Text>
+            <Text
+              style={{
+                fontFamily: fonts.secondary[400],
+                fontSize: 16,
+              }}>
+              Total Bayar :
+            </Text>
+            <Text
+              style={{
+                fontFamily: fonts.secondary[600],
+                fontSize: 30,
+                color: colors.secondary,
+                marginBottom: 20,
+              }}>
+              Rp. {new Intl.NumberFormat().format(item.price)}
+            </Text>
+            {/* <View>
               <Text
                 style={{
                   fontFamily: fonts.secondary[400],
                   fontSize: 14,
                   textAlign: 'right',
+                  bottom: 10,
                 }}>
-                Silahkan Pilih Nominal
+                {item.desc.tarif} / {item.desc.daya} WATT
               </Text>
-              {data.map((item) => {
-                return (
-                  <TouchableOpacity
-                    style={{
-                      marginVertical: 10,
-                      borderWidth: 1,
-                      borderColor: colors.primary,
-                      borderRadius: 10,
-                      padding: 10,
-                    }}>
-                    <Text
-                      style={{
-                        fontFamily: fonts.secondary[600],
-                        fontSize: 18,
-                      }}>
-                      Rp. {new Intl.NumberFormat().format(item.pulsa_nominal)}
-                    </Text>
-                    <Text
-                      style={{
-                        fontFamily: fonts.secondary[600],
-                        fontSize: 14,
-                        color: colors.secondary,
-                      }}>
-                      Harga : Rp.{' '}
-                      {new Intl.NumberFormat().format(item.pulsa_price)}
-                    </Text>
-                  </TouchableOpacity>
-                );
-              })}
-            </View>
+            </View> */}
+            <MyButton
+              title="BELI SEKARANG"
+              warna={colors.primary}
+              onPress={() => navigation.navigate('PpobPlnMeteranDetail', item)}
+            />
           </View>
         )}
       </View>
