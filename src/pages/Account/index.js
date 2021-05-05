@@ -168,7 +168,7 @@ export default function Account({navigation}) {
   };
 
   const masukFacebook = () => {
-    dispatch(setLoading(true));
+    // dispatch(setLoading(true));
 
     // Attempt a login using the Facebook login dialog asking for default permissions.
     LoginManager.logInWithPermissions(['public_profile', 'email']).then(

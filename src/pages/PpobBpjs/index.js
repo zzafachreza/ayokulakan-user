@@ -4,74 +4,53 @@ import {
   Text,
   View,
   ScrollView,
+  ActivityIndicator,
+  TouchableOpacity,
   Picker,
-  Platform,
 } from 'react-native';
-import {MyInput, MyButton, MyGap} from '../../components';
+import {MyInput, MyGap, MyButton} from '../../components';
 import {colors, fonts} from '../../utils';
-import {Icon} from 'react-native-elements';
 import axios from 'axios';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import 'intl';
+import 'intl/locale-data/jsonp/en';
 
-export default function PpobBpjs() {
+export default function PpobBpjs({navigation}) {
   const [key, setKey] = useState('');
-  const [lokasi, setLokasi] = useState('');
-  const [data, setData] = useState([]);
+  const [bulan, setBulan] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [item, setItem] = useState({});
+  const [status, setStatus] = useState(false);
+  const [data, setData] = useState({});
 
-  const [TanggalTarget, setTanggalTarget] = useState('');
-
-  // datepicker
-
-  const [date, setDate] = useState(new Date(1598051730000));
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(false);
-
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios');
-    setDate(currentDate);
-
-    // alert(currentDate);
-
-    const Today = new Date(currentDate);
-    const dd = String(Today.getDate()).padStart(2, '0');
-    const mm = String(Today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    const yyyy = Today.getFullYear();
-    const jam = Today.getHours();
-    const menit = Today.getMinutes();
-    const detik = Today.getUTCSeconds();
-    const today = `${dd}/${mm}/${yyyy}`;
-    setTanggalTarget(today);
-  };
-
-  const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
-
-  const showDatepicker = () => {
-    showMode('date');
-  };
-
-  const __getData = () => {
-    axios.get('https://ayokulakan.com/api/ppob/pdam').then((res) => {
-      console.log(res.data.data);
-      setData(res.data.data);
-    });
-  };
   const _cek = () => {
-    alert('Tinggal Integrasi Payment');
+    // alert(key);
+    setLoading(true);
+    _getData();
   };
 
-  useEffect(() => {
-    __getData();
-  }, []);
+  useEffect(() => {}, []);
+
+  const _getData = () => {
+    axios
+      .get(
+        'https://ayokulakan.com/api/ppob/pasca?ppob_pelanggan=' +
+          key +
+          '&type=BPJS&month=' +
+          bulan,
+      )
+      .then((res) => {
+        setLoading(false);
+        console.log(res.data);
+        setStatus(true);
+        setItem(res.data);
+      });
+  };
 
   return (
-    <View style={{flex: 1, flexDirection: 'column'}}>
+    <ScrollView>
       <View
         style={{
-          // backgroundColor: 'red',
+          flex: 1,
           padding: 10,
         }}>
         <MyInput
@@ -82,36 +61,156 @@ export default function PpobBpjs() {
           iconname="calculator-outline"
           onChangeText={(value) => setKey(value)}
         />
-
         <MyGap jarak={10} />
-        {show && (
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={date}
-            mode={mode}
-            format="YYYY-MM-DD"
-            is24Hour={true}
-            display="default"
-            onChange={onChange}
-          />
-        )}
-        <MyButton
-          onPress={showDatepicker}
-          warna={colors.primary}
-          title="Pilih Bulan"
-          Icons="calendar-outline"
-        />
-      </View>
-      <View
-        style={{
-          flex: 1,
-          padding: 10,
-          justifyContent: 'flex-end',
-          // backgroundColor: 'blue',
-        }}>
+        <MyGap jarak={10} />
+        <Picker
+          selectedValue={bulan}
+          onValueChange={(itemValue) => setBulan(itemValue)}>
+          <Picker.Item label="Januari" value="Januari" />
+          <Picker.Item label="Februari" value="Februari" />
+          <Picker.Item label="Maret" value="Maret" />
+          <Picker.Item label="April" value="April" />
+          <Picker.Item label="Mei" value="Mei" />
+          <Picker.Item label="Juni" value="Juni" />
+          <Picker.Item label="Juli" value="Juli" />
+          <Picker.Item label="Agustus" value="Agustus" />
+          <Picker.Item label="September" value="September" />
+          <Picker.Item label="Oktober" value="Oktober" />
+          <Picker.Item label="November" value="November" />
+          <Picker.Item label="Desember" value="Desember" />
+        </Picker>
         <MyButton onPress={_cek} warna={colors.secondary} title="CEK" />
+        <MyGap jarak={20} />
+        {status && (
+          <View
+            style={{
+              borderWidth: 1,
+              borderRadius: 10,
+              borderColor: colors.primary,
+              padding: 10,
+            }}>
+            <Text
+              style={{
+                fontFamily: fonts.secondary[400],
+                fontSize: 16,
+              }}>
+              Nomor :
+            </Text>
+            <Text
+              style={{
+                fontFamily: fonts.secondary[600],
+                fontSize: 16,
+              }}>
+              {item.hp}
+            </Text>
+            <Text
+              style={{
+                fontFamily: fonts.secondary[400],
+                fontSize: 16,
+              }}>
+              Nama :
+            </Text>
+            <Text
+              style={{
+                fontFamily: fonts.secondary[600],
+                fontSize: 16,
+              }}>
+              {item.tr_name}
+            </Text>
+            <Text
+              style={{
+                fontFamily: fonts.secondary[400],
+                fontSize: 16,
+              }}>
+              Periode :
+            </Text>
+            <Text
+              style={{
+                fontFamily: fonts.secondary[600],
+                fontSize: 16,
+              }}>
+              {item.period}
+            </Text>
+            <Text
+              style={{
+                fontFamily: fonts.secondary[400],
+                fontSize: 16,
+              }}>
+              Kewajiban Bayar :
+            </Text>
+            <Text
+              style={{
+                fontFamily: fonts.secondary[600],
+                fontSize: 16,
+              }}>
+              {new Intl.NumberFormat().format(item.nominal)}
+            </Text>
+            <Text
+              style={{
+                fontFamily: fonts.secondary[400],
+                fontSize: 16,
+              }}>
+              Biaya Admin :
+            </Text>
+            <Text
+              style={{
+                fontFamily: fonts.secondary[600],
+                fontSize: 16,
+              }}>
+              {new Intl.NumberFormat().format(item.admin)}
+            </Text>
+            <Text
+              style={{
+                fontFamily: fonts.secondary[400],
+                fontSize: 16,
+              }}>
+              Total Bayar :
+            </Text>
+            <Text
+              style={{
+                fontFamily: fonts.secondary[600],
+                fontSize: 30,
+                color: colors.secondary,
+                marginBottom: 20,
+              }}>
+              Rp. {new Intl.NumberFormat().format(item.price)}
+            </Text>
+            {/* <View>
+              <Text
+                style={{
+                  fontFamily: fonts.secondary[400],
+                  fontSize: 14,
+                  textAlign: 'right',
+                  bottom: 10,
+                }}>
+                {item.desc.tarif} / {item.desc.daya} WATT
+              </Text>
+            </View> */}
+            <MyButton
+              title="BELI SEKARANG"
+              warna={colors.primary}
+              onPress={() => navigation.navigate('PpobBpjsDetail', item)}
+            />
+          </View>
+        )}
       </View>
-    </View>
+      {loading && (
+        <View
+          style={{
+            flex: 1,
+            position: 'absolute',
+            justifyContent: 'center',
+            alignItems: 'center',
+            // backgroundColor: '#FFF',
+            width: '100%',
+            top: 0,
+            opacity: 0.7,
+            height: '100%',
+          }}>
+          <ActivityIndicator color={colors.primary} size="large" />
+        </View>
+      )}
+    </ScrollView>
   );
 }
 

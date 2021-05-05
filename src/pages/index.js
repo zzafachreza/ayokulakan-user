@@ -69,6 +69,7 @@ import PpobTv from './PpobTv';
 import PpobInternet from './PpobInternet';
 import PpobTelepon from './PpobTelepon';
 import PpobBpjs from './PpobBpjs';
+import PpobBpjsDetail from './PpobBpjsDetail';
 import CategoryProductUtama from './CategoryProductUtama';
 
 import PulsaPayment from './PulsaPayment';
@@ -144,6 +145,7 @@ export {
   PpobInternet,
   PpobTelepon,
   PpobBpjs,
+  PpobBpjsDetail,
   CategoryProductUtama,
   PulsaPayment,
   PpobDataPayment,

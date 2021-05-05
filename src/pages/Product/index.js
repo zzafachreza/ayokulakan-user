@@ -269,6 +269,7 @@ export default function Produk({navigation, route}) {
     // console.log(user.id);
 
     refRBSheet.current.close();
+    setCart(1);
 
     try {
       console.log(kirim);
