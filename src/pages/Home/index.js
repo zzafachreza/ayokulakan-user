@@ -278,7 +278,7 @@ export default function Home({navigation, route}) {
 
   const dataGlobal = useSelector((state) => state.reducerTools);
   useEffect(() => {
-    console.log(dataGlobal);
+    console.log('home', dataGlobal);
   }, []);
 
   const _renderItem2 = ({item, index}) => {

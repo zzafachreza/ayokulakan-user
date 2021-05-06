@@ -74,6 +74,7 @@ export default function Splash({navigation}) {
 
     getData('cart').then((res) => {
       dispatch(setCart(res));
+      console.log('cart', res);
     });
 
     setTimeout(() => {

@@ -33,6 +33,7 @@ export default function Cart({navigation}) {
   const [data, setData] = useState([]);
   const [cartLocal, setCartLocal] = useState(0);
   const UsersGlobal = useSelector((state) => state.reducerUsers);
+  const dataGlobal = useSelector((state) => state.reducerTools);
   const [user, setUser] = useState({});
   const [total, setTotal] = useState(0);
   const dispatch = useDispatch();
@@ -116,7 +117,9 @@ export default function Cart({navigation}) {
 
   const hapus = (id) => {
     console.log('haspu cart');
-    dispatch(setCart(-1));
+
+    dispatch(setCart(dataGlobal.cart - 1));
+
     axios
       .delete('https://ayokulakan.com/api/favorit-barang/' + id)
       .then((res) => {

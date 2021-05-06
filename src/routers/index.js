@@ -140,7 +140,7 @@ export default function Router() {
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
   return (
-    <Stack.Navigator initialRouteName={'PpobBpjs'}>
+    <Stack.Navigator initialRouteName={'Splash'}>
       <Stack.Screen
         name="Splash"
         component={Splash}

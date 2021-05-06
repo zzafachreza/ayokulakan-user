@@ -201,6 +201,15 @@ export default function Produk({navigation, route}) {
   navigation.setOptions({title: 'Detail Produk'});
 
   useEffect(() => {
+    getData('users').then((res) => {
+      console.log(res);
+      setUser(res);
+      if (!res) {
+        alert('Anda Harus Login Terlebih dahulu !');
+        navigation.navigation('Account');
+      }
+    });
+
     axios
       .get(
         'https://ayokulakan.com/api/lapak?id=' +
@@ -269,7 +278,14 @@ export default function Produk({navigation, route}) {
     // console.log(user.id);
 
     refRBSheet.current.close();
-    setCart(1);
+
+    if (dataGlobal.cart > 0) {
+      dispatch(setCart(dataGlobal.cart + 1));
+    } else {
+      dispatch(setCart(1));
+    }
+
+    console.log('add cart', dataGlobal.cart);
 
     try {
       console.log(kirim);

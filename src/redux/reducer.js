@@ -42,7 +42,7 @@ const reducerTools = (state = initalTools, action) => {
       // storeData('cart', action.inputValue);
       return {
         ...state,
-        cart: state.cart + action.inputValue,
+        cart: action.inputValue,
       };
   }
   return state;
