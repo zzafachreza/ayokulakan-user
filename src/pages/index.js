@@ -74,6 +74,7 @@ import CategoryProductUtama from './CategoryProductUtama';
 
 import PulsaPayment from './PulsaPayment';
 import PpobDataPayment from './PpobDataPayment';
+import PpobTvDetail from './PpobTvDetail';
 
 export {
   Splash,
@@ -149,4 +150,5 @@ export {
   CategoryProductUtama,
   PulsaPayment,
   PpobDataPayment,
+  PpobTvDetail,
 };

@@ -7,6 +7,7 @@ import MyCarouser from './MyCarouser';
 import MyCarouser2 from './MyCarouser2';
 import MyLapak from './MyLapak';
 import MyProductDiscount from './MyProductDiscount';
+import MyPicker from './MyPicker';
 
 export {
   BottomNavigator,
@@ -18,4 +19,5 @@ export {
   MyCarouser2,
   MyLapak,
   MyProductDiscount,
+  MyPicker,
 };

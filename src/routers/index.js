@@ -83,6 +83,7 @@ import {
   PulsaPayment,
   PpobDataPayment,
   PpobBpjsDetail,
+  PpobTvDetail,
 } from '../pages';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigator} from '../components';
@@ -398,6 +399,19 @@ export default function Router() {
         component={PpobDataPayment}
         options={({route, navigation}) => ({
           title: 'DATA PAYMENT',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#16A858',
+            elevation: 0, // remove shadow on Android
+          },
+        })}
+      />
+
+      <Stack.Screen
+        name="PpobTvDetail"
+        component={PpobTvDetail}
+        options={({route, navigation}) => ({
+          title: 'TV KABEL',
           headerTintColor: 'white',
           headerStyle: {
             backgroundColor: '#16A858',

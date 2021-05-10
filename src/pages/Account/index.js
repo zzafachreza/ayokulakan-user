@@ -57,6 +57,7 @@ export default function Account({navigation}) {
         setIsLogin(false);
       } else {
         setIsLogin(true);
+        __getAlamat(res.id);
       }
     });
 
@@ -219,6 +220,33 @@ export default function Account({navigation}) {
     );
   };
 
+  const [dataAlamat, setDataAlamat] = useState([]);
+
+  const __getAlamat = (id_user) => {
+    axios
+      .get(
+        'https://ayokulakan.com/api/profile-user?created_by=' +
+          id_user +
+          '&includes=negara,provinsi,kota,kecamatan',
+      )
+      .then((res) => {
+        console.log('data alamat', res.data.data);
+        setDataAlamat(res.data.data);
+      });
+  };
+
+  const _hapusAlamat = (id) => {
+    console.log('hasil hpus', UsersGlobal.data.id);
+
+    axios
+      .post('https://ayokulakan.com/v1/api/alamat_hapus', {
+        id: id,
+      })
+      .then((res) => {
+        console.log(res);
+        __getAlamat(UsersGlobal.data.id);
+      });
+  };
   return (
     <>
       <ScrollView
@@ -365,29 +393,56 @@ export default function Account({navigation}) {
                 </ListItem.Content>
               </ListItem>
 
-              <ListItem bottomDivider>
-                <Icon
-                  name="home"
-                  type="font-awesome"
-                  color={colors.primary}
-                  size={20}
-                />
-                <ListItem.Content>
-                  <ListItem.Title>
-                    <Text
-                      style={{
-                        fontFamily: 'Montserrat-SemiBold',
-                      }}>
-                      Alamat
-                    </Text>
-                  </ListItem.Title>
-                  <ListItem.Subtitle>
-                    {`${UsersGlobal.data.alamat}`}
-
-                    {/* {`${UsersGlobal.data.alamat} ${UsersGlobal.data.kota.kota} ${UsersGlobal.data.provinsi.provinsi}`} */}
-                  </ListItem.Subtitle>
-                </ListItem.Content>
-              </ListItem>
+              <View style={{padding: 10}}>
+                <Text
+                  style={{
+                    fontFamily: 'Montserrat-SemiBold',
+                    color: '#000',
+                    left: 10,
+                    fontSize: 16,
+                  }}>
+                  Alamat
+                </Text>
+              </View>
+              {dataAlamat.map((item) => {
+                return (
+                  <ListItem bottomDivider>
+                    <Icon
+                      name="home"
+                      type="font-awesome"
+                      color={colors.primary}
+                      size={20}
+                    />
+                    <ListItem.Content>
+                      <ListItem.Title>
+                        <Text
+                          style={{
+                            fontFamily: 'Montserrat-SemiBold',
+                          }}>
+                          {item.alamat}
+                        </Text>
+                      </ListItem.Title>
+                      <ListItem.Subtitle>
+                        {item.provinsi.provinsi}
+                      </ListItem.Subtitle>
+                      <ListItem.Subtitle>{item.kota.kota}</ListItem.Subtitle>
+                      <ListItem.Subtitle>
+                        {item.kecamatan.kecamatan}
+                      </ListItem.Subtitle>
+                      <ListItem.Subtitle>{item.kode_pos}</ListItem.Subtitle>
+                    </ListItem.Content>
+                    <TouchableOpacity
+                      onPress={() => _hapusAlamat(item.id, UsersGlobal.dat)}>
+                      <Icon
+                        name="trash"
+                        type="font-awesome"
+                        color={colors.danger}
+                        size={20}
+                      />
+                    </TouchableOpacity>
+                  </ListItem>
+                );
+              })}
 
               <MyButton
                 Icons="log-out-outline"

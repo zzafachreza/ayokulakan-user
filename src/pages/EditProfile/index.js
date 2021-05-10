@@ -111,7 +111,7 @@ export default function EditProfile({navigation, route}) {
             }
           />
           <MyGap jarak={5} />
-          <MyInput
+          {/* <MyInput
             label="Alamat (Utama)"
             iconname="map-outline"
             value={kirim.alamat}
@@ -121,7 +121,7 @@ export default function EditProfile({navigation, route}) {
                 alamat: value,
               })
             }
-          />
+          /> */}
         </View>
         <View style={{padding: 20}}>
           <MyButton
