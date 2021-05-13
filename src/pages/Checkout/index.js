@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Image,
   ActivityIndicator,
+  Picker,
 } from 'react-native';
 import {MyHeader} from '../../components';
 import {fonts} from '../../utils/fonts';
@@ -29,8 +30,47 @@ const wait = (timeout) => {
   });
 };
 
-export default function Cart({navigation}) {
+export default function Checkout({navigation, route}) {
   const [data, setData] = useState([]);
+  const [kurir, setKurir] = useState('JNE');
+  const dataKurir = [
+    {
+      code: 'jne',
+      nama: 'JNE',
+    },
+    {
+      code: 'sicepat',
+      nama: 'SICEPAT',
+    },
+    {
+      code: 'wahana',
+      nama: 'WAHANA',
+    },
+    {
+      code: 'ninja',
+      nama: 'NINJA',
+    },
+    {
+      code: 'pos',
+      nama: 'Pos Indonesia',
+    },
+    {
+      code: 'tiki',
+      nama: 'TIKI',
+    },
+    {
+      code: 'pandu',
+      nama: 'Pandu Logistic',
+    },
+    {
+      code: 'pahala',
+      nama: 'Pahala',
+    },
+    {
+      code: 'rex',
+      nama: 'REX',
+    },
+  ];
   const [cartLocal, setCartLocal] = useState(0);
   const UsersGlobal = useSelector((state) => state.reducerUsers);
   const dataGlobal = useSelector((state) => state.reducerTools);
@@ -39,30 +79,8 @@ export default function Cart({navigation}) {
   const dispatch = useDispatch();
   const [refreshing, setRefreshing] = React.useState(false);
 
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    getData('users').then((res) => {
-      console.log(res);
-      setUser(res);
-      if (!res) {
-        alert('Anda Harus Login Terlebih dahulu !');
-        navigation.navigation('Account');
-      }
-      getCart(res.id);
-    });
-    wait(2000).then(() => setRefreshing(false));
-  }, []);
-
   useEffect(() => {
-    getData('users').then((res) => {
-      console.log(res);
-      setUser(res);
-      if (!res) {
-        alert('Anda Harus Login Terlebih dahulu !');
-        navigation.navigation('Account');
-      }
-      getCart(res.id);
-    });
+    setData(route.params.cart);
   }, []);
 
   const updateCart = (id, id_barang, qty) => {
@@ -241,74 +259,35 @@ export default function Cart({navigation}) {
               {new Intl.NumberFormat().format(item.form.harga_barang)}
             </Text>
             <View
-              style={{
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                paddingHorizontal: '30%',
-                flexDirection: 'row',
-              }}>
-              <TouchableOpacity
-                onPress={() => {
-                  updateCart(item.id, item.id_barang, jumlah - 1);
-                }}
+              style={
+                {
+                  // backgroundColor: 'red',
+                }
+              }>
+              <View
                 style={{
-                  width: 30,
-                  height: 30,
-                  // borderWidth: 1,
-                  backgroundColor: colors.primary,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderRadius: 30 / 2,
+                  justifyContent: 'flex-start',
+                  alignItems: 'flex-start',
+                  marginTop: 5,
                 }}>
-                <Icon
-                  type="font-awesome"
-                  name="minus"
-                  color={colors.white}
-                  size={14}
-                />
-              </TouchableOpacity>
-              <Text
-                style={{
-                  fontSize: 14,
-                  margin: 5,
-                  fontFamily: fonts.secondary[600],
+                <Text
+                  style={{
+                    fontFamil: fonts.secondary[600],
+                    color: colors.primary,
+                  }}>
+                  Pengiriman
+                </Text>
+              </View>
+              <Picker
+                selectedValue={kurir}
+                onValueChange={(val) => {
+                  setKurir(val);
                 }}>
-                {jumlah}
-              </Text>
-              <TouchableOpacity
-                onPress={() => {
-                  updateCart(item.id, item.id_barang, jumlah + 1);
-                }}
-                style={{
-                  width: 30,
-                  height: 30,
-                  // borderWidth: 1,
-                  backgroundColor: colors.primary,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderRadius: 30 / 2,
-                }}>
-                <Icon
-                  type="font-awesome"
-                  name="plus"
-                  color={colors.white}
-                  size={14}
-                />
-              </TouchableOpacity>
+                {dataKurir.map((item) => {
+                  return <Picker.Item label={item.nama} value={item.code} />;
+                })}
+              </Picker>
             </View>
-          </View>
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <TouchableOpacity
-              onPress={() => hapus(item.id)}
-              style={{
-                padding: 10,
-              }}>
-              <Icon type="font-awesome" name="trash" color="red" />
-            </TouchableOpacity>
           </View>
         </View>
         {/* area qty */}
@@ -323,13 +302,6 @@ export default function Cart({navigation}) {
       }}>
       {/* <Text>{token}</Text> */}
       <ScrollView
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-            colors={['#16A858']}
-          />
-        }
         style={{
           flex: 1,
           // backgroundColor: 'red',

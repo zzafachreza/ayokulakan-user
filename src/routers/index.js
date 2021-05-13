@@ -84,6 +84,7 @@ import {
   PpobDataPayment,
   PpobBpjsDetail,
   PpobTvDetail,
+  Checkout,
 } from '../pages';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigator} from '../components';
@@ -868,6 +869,19 @@ export default function Router() {
         component={TentangSyarat}
         options={{
           headerTitle: 'Syarat dan Ketentuan',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="Checkout"
+        component={Checkout}
+        options={{
+          headerTitle: 'CHECKOUT',
           headerTintColor: 'white',
           headerStyle: {
             backgroundColor: colors.primary,
