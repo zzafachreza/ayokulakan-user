@@ -118,6 +118,11 @@ export default function Checkout({navigation, route}) {
     });
   };
 
+  const cekKurir = (val) => {
+    console.log('user data', UsersGlobal);
+    console.log('kurir', val);
+  };
+
   const amount = (item) => {
     return item.form.harga_barang;
   };
@@ -281,7 +286,7 @@ export default function Checkout({navigation, route}) {
               <Picker
                 selectedValue={kurir}
                 onValueChange={(val) => {
-                  setKurir(val);
+                  cekKurir(val);
                 }}>
                 {dataKurir.map((item) => {
                   return <Picker.Item label={item.nama} value={item.code} />;

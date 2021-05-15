@@ -24,6 +24,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setForm, setLoading, setUsers} from '../../redux';
 import {colors} from '../../utils/colors';
 import {showMessage} from 'react-native-flash-message';
+import {fonts} from '../../utils';
 
 export default function Account({navigation}) {
   const isFocused = useIsFocused();
@@ -80,6 +81,7 @@ export default function Account({navigation}) {
       .then((res) => {
         console.log(res);
         if (res.data.status) {
+          __getAlamat(res.data.data.id);
           storeData('users', res.data.data);
           dispatch(setUsers('data', res.data.data));
           setIsLogin(true);
@@ -247,6 +249,31 @@ export default function Account({navigation}) {
         __getAlamat(UsersGlobal.data.id);
       });
   };
+
+  const _utamaAlamat = (id, created_by) => {
+    dispatch(setLoading(true));
+    console.log('hasil utama', id + '/' + created_by);
+
+    axios
+      .post('https://ayokulakan.com/v1/api/alamat_utama', {
+        id: id,
+        created_by: created_by,
+      })
+      .then((res) => {
+        console.log(res);
+        axios
+          .get('https://ayokulakan.com/api/profile/' + UsersGlobal.data.id)
+          .then((res) => {
+            // console.log('hasil fecth2', res.data.data);
+
+            storeData('users', res.data.data);
+            dispatch(setUsers('data', res.data.data));
+
+            __getAlamat(res.data.data.id);
+            dispatch(setLoading(false));
+          });
+      });
+  };
   return (
     <>
       <ScrollView
@@ -405,6 +432,14 @@ export default function Account({navigation}) {
                 </Text>
               </View>
               {dataAlamat.map((item) => {
+                let utama = '';
+
+                if (item.status == 'Alamat Utama') {
+                  utama = '( Alamat Utama )';
+                } else {
+                  utama = '';
+                }
+
                 return (
                   <ListItem bottomDivider>
                     <Icon
@@ -422,6 +457,15 @@ export default function Account({navigation}) {
                           {item.alamat}
                         </Text>
                       </ListItem.Title>
+                      <ListItem.Title>
+                        <Text
+                          style={{
+                            fontFamily: fonts.secondary[400],
+                            color: colors.secondary,
+                          }}>
+                          {utama}
+                        </Text>
+                      </ListItem.Title>
                       <ListItem.Subtitle>
                         {item.provinsi.provinsi}
                       </ListItem.Subtitle>
@@ -430,6 +474,29 @@ export default function Account({navigation}) {
                         {item.kecamatan.kecamatan}
                       </ListItem.Subtitle>
                       <ListItem.Subtitle>{item.kode_pos}</ListItem.Subtitle>
+                      {utama == '' && (
+                        <ListItem.Subtitle>
+                          <TouchableOpacity
+                            style={{
+                              // flex: 1,
+                              padding: 10,
+                              backgroundColor: colors.primary,
+                              justifyContent: 'flex-end',
+                              alignItems: 'flex-end',
+                            }}
+                            onPress={() =>
+                              _utamaAlamat(item.id, UsersGlobal.data.id)
+                            }>
+                            <Text
+                              style={{
+                                color: colors.white,
+                                fontFamily: fonts.secondary[400],
+                              }}>
+                              Jadikan Utama
+                            </Text>
+                          </TouchableOpacity>
+                        </ListItem.Subtitle>
+                      )}
                     </ListItem.Content>
                     <TouchableOpacity
                       onPress={() => _hapusAlamat(item.id, UsersGlobal.dat)}>
