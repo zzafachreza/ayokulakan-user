@@ -32,8 +32,12 @@ const wait = (timeout) => {
 
 export default function Checkout({navigation, route}) {
   const [data, setData] = useState([]);
-  const [kurir, setKurir] = useState('JNE');
+  const [kurir, setKurir] = useState('');
   const dataKurir = [
+    {
+      code: '',
+      nama: '',
+    },
     {
       code: 'jne',
       nama: 'JNE',
@@ -78,7 +82,7 @@ export default function Checkout({navigation, route}) {
   const [total, setTotal] = useState(0);
   const dispatch = useDispatch();
   const [refreshing, setRefreshing] = React.useState(false);
-
+  const [dataTmp, setDataTmp] = useState([]);
   useEffect(() => {
     setData(route.params.cart);
   }, []);
@@ -118,38 +122,12 @@ export default function Checkout({navigation, route}) {
     });
   };
 
-  const cekKurir = (val) => {
-    console.log('user data', UsersGlobal);
-    console.log('kurir', val);
-  };
-
-  const amount = (item) => {
-    return item.form.harga_barang;
-  };
-
-  const sum = (prev, next) => {
-    return prev + next;
-  };
-
   var sub = 0;
   data.map((item) => {
     sub += item.form.harga_barang * item.jumlah_barang;
 
     console.log(sub);
   });
-
-  const hapus = (id) => {
-    console.log('haspu cart');
-
-    dispatch(setCart(dataGlobal.cart - 1));
-
-    axios
-      .delete('https://ayokulakan.com/api/favorit-barang/' + id)
-      .then((res) => {
-        console.log(res);
-        getCart(user.id);
-      });
-  };
 
   const _renderItem = ({item, index}) => {
     // console.log(item.image);
@@ -286,12 +264,70 @@ export default function Checkout({navigation, route}) {
               <Picker
                 selectedValue={kurir}
                 onValueChange={(val) => {
-                  cekKurir(val);
+                  setKurir(val);
+                  console.log('pembeli', item.creator.id_kecamatan);
+                  console.log('penjual', item.form.lapak.id_kecamatan);
+
+                  let url =
+                    'https://ayokulakan.com/api/rajaongkir/cost?origin=' +
+                    item.form.lapak.id_kecamatan +
+                    '&originType=subdistrict&destination=' +
+                    item.creator.id_kecamatan +
+                    '&destinationType=subdistrict&weight=1000&courier=' +
+                    val;
+                  console.log('url', url);
+                  axios.get(url).then((res) => {
+                    console.log(
+                      'hasul get kurir',
+                      res.data.result.rajaongkir.results[0].costs,
+                    );
+                    setDataTmp(res.data.result.rajaongkir.results[0].costs);
+                  });
                 }}>
                 {dataKurir.map((item) => {
                   return <Picker.Item label={item.nama} value={item.code} />;
                 })}
               </Picker>
+
+              <View>
+                {dataTmp.map((item) => {
+                  return (
+                    <TouchableOpacity
+                      onPress={() => {
+                        sub += item.cost[0].value;
+                        // alert(item.cost[0].value);
+                      }}
+                      style={{
+                        borderRadius: 10,
+                        borderWidth: 1,
+                        borderColor: colors.primary,
+                        padding: 10,
+                        marginVertical: 2,
+                      }}>
+                      <Text
+                        style={{
+                          fontFamily: fonts.secondary[600],
+                        }}>
+                        {item.service} ( {item.description} )
+                      </Text>
+                      <Text
+                        style={{
+                          fontFamily: fonts.secondary[600],
+                          color: colors.secondary,
+                        }}>
+                        {new Intl.NumberFormat().format(item.cost[0].value)}
+                      </Text>
+                      <Text
+                        style={{
+                          fontFamily: fonts.secondary[400],
+                          color: colors.primary,
+                        }}>
+                        {item.cost[0].etd} Hari
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
             </View>
           </View>
         </View>
