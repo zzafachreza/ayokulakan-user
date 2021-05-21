@@ -219,6 +219,7 @@ export default function MyPembayaranOnline() {
             img={{
               uri: 'https://ayokulakan.com/img/Icon-PPOB/Tiket-ravel.png',
             }}
+            onPress={() => navigation.navigate('Travel')}
           />
 
           <IconPemayaran

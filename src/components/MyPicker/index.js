@@ -1,35 +1,28 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, Text, View, Picker} from 'react-native';
 import {Icon, ListItem, Button} from 'react-native-elements';
 import {colors} from '../../utils/colors';
 import {fonts} from '../../utils/fonts';
 import {TextInput} from 'react-native-gesture-handler';
 
-export default function MyInput({
+export default function MyPicker({
   label,
   iconname,
-  onChangeText,
-  dataValue,
-  value,
   onValueChange,
-  autoFocus = false,
+  onChangeText,
+  value,
   keyboardType,
   secureTextEntry,
   styleInput,
   placeholder,
-  multiline,
+  label2,
   styleLabel,
-  onSubmitEditing,
   colorIcon = colors.primary,
+  data = [],
 }) {
-  const data = {
-    id: 1,
-    nama: 'aa',
-  };
-
   return (
     <>
-      {/* <View
+      <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
@@ -47,11 +40,25 @@ export default function MyInput({
           {label}
         </Text>
       </View>
+      {label2 && (
+        <Text
+          style={{
+            fontFamily: fonts.secondary[600],
+            color: colors.primary,
+            left: 10,
+            fontSize: 14,
+            marginVertical: 1,
+            ...styleLabel,
+          }}>
+          {label2}
+        </Text>
+      )}
       <Picker selectedValue={value} onValueChange={onValueChange}>
+        <Picker.Item label="Pilih salah satu" />
         {data.map((item) => {
-          return <Picker.Item label={item.name} value={item.code} />;
+          return <Picker.Item value={item.value} label={item.label} />;
         })}
-      </Picker> */}
+      </Picker>
     </>
   );
 }

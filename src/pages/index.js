@@ -77,6 +77,9 @@ import PpobDataPayment from './PpobDataPayment';
 import PpobTvDetail from './PpobTvDetail';
 import Checkout from './Checkout';
 
+import Travel from './Travel';
+import TravelDetail from './TravelDetail';
+
 export {
   Splash,
   GetStarted,
@@ -153,4 +156,6 @@ export {
   PpobDataPayment,
   PpobTvDetail,
   Checkout,
+  Travel,
+  TravelDetail,
 };

@@ -85,6 +85,8 @@ import {
   PpobBpjsDetail,
   PpobTvDetail,
   Checkout,
+  Travel,
+  TravelDetail,
 } from '../pages';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigator} from '../components';
@@ -882,6 +884,32 @@ export default function Router() {
         component={Checkout}
         options={{
           headerTitle: 'CHECKOUT',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="Travel"
+        component={Travel}
+        options={{
+          headerTitle: 'Travel',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="TravelDetail"
+        component={TravelDetail}
+        options={{
+          headerTitle: 'Travel Detail',
           headerTintColor: 'white',
           headerStyle: {
             backgroundColor: colors.primary,

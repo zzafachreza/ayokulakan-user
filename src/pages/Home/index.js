@@ -650,7 +650,7 @@ export default function Home({navigation, route}) {
 
           <MyLapak />
 
-          <View
+          {/* <View
             style={{
               padding: 10,
               backgroundColor: '#16A858',
@@ -675,9 +675,9 @@ export default function Home({navigation, route}) {
                 Koleksi Barang Terbaru
               </Text>
             </View>
-          </View>
+          </View> */}
 
-          <MyProductMew />
+          {/* <MyProductMew />
 
           <MyRentalNew />
 
@@ -686,7 +686,7 @@ export default function Home({navigation, route}) {
           <MyPertanian />
           <MyPerikanan />
           <MyUkm />
-          <MyPerkebunan />
+          <MyPerkebunan /> */}
         </ScrollView>
       </SafeAreaView>
     </>
