@@ -79,6 +79,7 @@ import Checkout from './Checkout';
 
 import Travel from './Travel';
 import TravelDetail from './TravelDetail';
+import Pesawat from './Pesawat';
 
 export {
   Splash,
@@ -158,4 +159,5 @@ export {
   Checkout,
   Travel,
   TravelDetail,
+  Pesawat,
 };

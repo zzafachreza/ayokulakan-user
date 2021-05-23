@@ -174,6 +174,7 @@ export default function MyPembayaranOnline() {
             img={{
               uri: 'https://ayokulakan.com/img/Icon-PPOB/Tiket-Pesawat.png',
             }}
+            onPress={() => navigation.navigate('Pesawat')}
           />
           <IconPemayaran
             title="Hotel"
