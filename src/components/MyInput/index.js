@@ -10,9 +10,11 @@ export default function MyInput({
   iconname,
   onChangeText,
   value,
+  onBlur,
   autoFocus = false,
   keyboardType,
   secureTextEntry,
+  onFocus,
   styleInput,
   placeholder,
   multiline,
@@ -41,6 +43,8 @@ export default function MyInput({
         </Text>
       </View>
       <TextInput
+        onBlur={onBlur}
+        onFocus={onFocus}
         multiline={multiline}
         onSubmitEditing={onSubmitEditing}
         autoFocus={autoFocus}
