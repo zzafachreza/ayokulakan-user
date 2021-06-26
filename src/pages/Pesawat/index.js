@@ -6,6 +6,8 @@ import {
   SafeAreaView,
   TouchableOpacity,
   TouchableNativeFeedback,
+  Image,
+  ActivityIndicator,
 } from 'react-native';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import {colors, fonts} from '../../utils';
@@ -17,15 +19,17 @@ import 'intl/locale-data/jsonp/en';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {ScrollView} from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
+import {round} from 'react-native-reanimated';
 export default function Pesawat({navigation, route}) {
   const [data, setData] = useState([]);
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState('');
   const [kelas, setkelas] = useState('');
   const [tanggal, setTanggal] = useState('');
-  const [dewasa, setDewasa] = useState(0);
-  const [anak, setAnak] = useState(0);
-  const [bayi, setBayi] = useState(0);
+  const [dewasa, setDewasa] = useState('1');
+  const [anak, setAnak] = useState('0');
+  const [bayi, setBayi] = useState('0');
+  const [loading, setLoading] = useState(false);
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [isModalVisible2, setModalVisible2] = useState(false);
@@ -39,6 +43,7 @@ export default function Pesawat({navigation, route}) {
   };
 
   const cekPenerbangan = () => {
+    setLoading(true);
     const kirim = {
       tripType: 'OneWay',
       origin: origin,
@@ -53,15 +58,16 @@ export default function Pesawat({navigation, route}) {
       'kirim',
       `https://ayokulakan.com/api/darmawisata/scheduleAllAirline?tripType=OneWay&origin=${origin}&destination=${destination}&departDate=${tanggal}&paxAdult=${dewasa}&paxChild=${anak}&paxInfant=${bayi}&airlineAccessCode=013819`,
     );
-    axios
-      .get(
-        `https://ayokulakan.com/api/darmawisata/scheduleAllAirline?tripType=OneWay&origin=${origin}&destination=${destination}&departDate=${tanggal}&paxAdult=${dewasa}&paxChild=${anak}&paxInfant=${bayi}&airlineAccessCode=013819`,
-      )
-      .then((res) => {
-        console.log(res.data.data.journeyDepart);
-        setHasil(true);
-        setDataHasil(res.data.data.journeyDepart);
-      });
+
+    const urlFix = `https://ayokulakan.com/api/darmawisata/scheduleAllAirline?tripType=OneWay&origin=${origin}&destination=${destination}&departDate=${tanggal}&paxAdult=${dewasa}&paxChild=${anak}&paxInfant=${bayi}&airlineAccessCode=013819`;
+    const test =
+      'https://ayokulakan.com/api/darmawisata/scheduleAllAirline?tripType=OneWay&origin=CGK&destination=TJQ&departDate=2021-06-30&paxAdult=2&paxChild=1&paxInfant=0&airlineAccessCode=013819';
+    axios.get(urlFix).then((res) => {
+      setLoading(false);
+      console.log(res.data.data.journeyDepart);
+      setHasil(true);
+      setDataHasil(res.data.data.journeyDepart);
+    });
   };
 
   const [date, setDate] = useState(new Date());
@@ -116,6 +122,9 @@ export default function Pesawat({navigation, route}) {
   //   });
   // }, []);
 
+  const [locationOrigin, setLocationOrigin] = useState('');
+  const [locationDestination, setLocationDestination] = useState('');
+
   const [dataOrigin, setdataOrigin] = useState(false);
   const [keyOrigin, setKeyOrigin] = useState('aaa');
   const [labelOrigin, setLabelOrigin] = useState('Daerah Asal');
@@ -124,12 +133,18 @@ export default function Pesawat({navigation, route}) {
   const [keyDes, setKeyDes] = useState('aaa');
   const [labelDes, setLabelDes] = useState('Daerah Tujuan');
 
+  const getTanggalIndonesia = (x) => {
+    let tgl = x.split('Z');
+    return tgl[0];
+  };
+
   return (
     <>
       <SafeAreaView>
         <ScrollView
           style={{
             padding: 10,
+            backgroundColor: '#F4F7FE',
           }}>
           {!hasil && (
             <>
@@ -326,29 +341,190 @@ export default function Pesawat({navigation, route}) {
                 title="Lihat Jadwal Penerbangan"
                 warna={colors.secondary}
               />
+              {loading && (
+                <View
+                  style={{
+                    flex: 1,
+                    position: 'absolute',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    // backgroundColor: '#FFF',
+                    width: '100%',
+                    top: 0,
+                    opacity: 0.7,
+                    height: '100%',
+                  }}>
+                  <ActivityIndicator color="#16A858" size="large" />
+                </View>
+              )}
             </>
           )}
 
           {hasil &&
             dataHasil.map((item) => {
+              let maskapai = '';
+              let logo = '';
+              let arr = item.jiDepartTime.split('T');
+              let JamTake = arr[1].substring(0, 5);
+              let arr2 = item.jiArrivalTime.split('T');
+              let JamLand = arr2[1].substring(0, 5);
+
+              let hours = JamLand.split(':')[0] - JamTake.split(':')[0];
+              let minutes = JamLand.split(':')[1] - JamTake.split(':')[1];
+
+              let selisih = 0;
+              let a = 0;
+              if (JamTake <= '12:00' && JamLand >= '13:00') {
+                a = 1;
+              } else {
+                a = 0;
+              }
+              minutes = minutes.toString().length < 2 ? '0' + minutes : minutes;
+              if (minutes < 0) {
+                hours--;
+                minutes = 60 + minutes;
+              }
+              hours = hours.toString().length < 2 ? '0' + hours : hours;
+
+              selisih = hours - a + ':' + minutes;
+
+              switch (item.airlineID) {
+                case 'JTB':
+                  maskapai = 'Lion Air';
+                  logo =
+                    'https://s-light.tiket.photos/t/01E25EBZS3W0FY9GTG6C42E1SE/rsfit00gsmenlarge1/string/2020/12/17/1dedfd4e-2f74-4fa9-a3f5-d238c74d3d72-1608152770164-b210808aea30c7543cab4380aca4c3ad.png';
+                  break;
+                case 'QG':
+                  maskapai = 'Citilink Indonesia';
+                  logo =
+                    'https://s-light.tiket.photos/t/01E25EBZS3W0FY9GTG6C42E1SE/rsfit00gsmenlarge1/string/2020/12/17/3deec547-980a-4d75-ac89-6e34eb9ddcf7-1608153225434-f5996f5af379dc69b93f00f8b725e579.png';
+
+                  break;
+
+                case 'QZ':
+                  maskapai = 'Airasia Indonesia';
+                  logo =
+                    'https://s-light.tiket.photos/t/01E25EBZS3W0FY9GTG6C42E1SE/rsfit00gsmenlarge1/string/2020/10/09/0fcd42f8-3ee7-45b1-aa99-00c62a17efec-1602237830043-0bb2929af8f2b97a9c3aecb9fe13f014.jpg';
+
+                  break;
+                case 'SJ':
+                  maskapai = 'Sriwijaya Air';
+                  logo =
+                    'https://s-light.tiket.photos/t/01E25EBZS3W0FY9GTG6C42E1SE/rsfit00gsmenlarge1/string/2020/12/17/97329954-f734-4840-bb0b-a191d251672b-1608153267798-8b0e1941c0d909a586e08d437a15a1f6.png';
+
+                  break;
+                case 'GA':
+                  maskapai = 'Garuda Indonesia';
+                  break;
+                case 'ID':
+                  maskapai = 'Batik Air';
+                  logo =
+                    'https://s-light.tiket.photos/t/01E25EBZS3W0FY9GTG6C42E1SE/rsfit00gsmenlarge1/string/2020/12/17/4d7fa58c-a41f-4424-a599-7a2ccd27f270-1608152644158-75f5ada3c1800a50a7ba02a56ae2603b.png';
+
+                  break;
+                case 'IW':
+                  maskapai = 'Wings Air';
+                  break;
+
+                default:
+                  maskapai = item.airlineID;
+                  break;
+              }
+
               return (
                 <TouchableOpacity
+                  onPress={() => {
+                    const send = {
+                      logo: logo,
+                      maskapai: maskapai,
+                      jamOrigin: JamTake,
+                      originCode: item.jiOrigin,
+                      jamDestination: JamLand,
+                      destinationCode: item.jiDestination,
+                      selisih: selisih,
+                      harga: item.sumPrice,
+                      origin: locationOrigin,
+                      destination: locationDestination,
+                    };
+                    console.log(send);
+                    navigation.navigate('PesawatCheckout', send);
+                  }}
                   style={{
+                    borderRadius: 10,
+                    backgroundColor: colors.white,
+
                     marginVertical: 10,
-                    borderWidth: 1,
+                    // borderWidth: 1,
+                    elevation: 2,
                     padding: 10,
                   }}>
-                  <Text>{item.airlineID}</Text>
-                  <Text>
-                    {item.jiDepartTime} - {item.jiArrivalTime}
-                  </Text>
-                  <Text>
-                    {item.jiOrigin} - {item.jiDestination}
-                  </Text>
-                  <Text>
-                    {' '}
-                    Rp. {new Intl.NumberFormat().format(item.sumPrice)}
-                  </Text>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      flex: 1,
+                      alignItems: 'center',
+                    }}>
+                    <Image
+                      resizeMode="contain"
+                      source={{uri: logo}}
+                      style={{width: 25, height: 25, margin: 5}}
+                    />
+                    <Text style={{fontFamily: fonts.secondary[600]}}>
+                      {maskapai}
+                    </Text>
+                  </View>
+                  <View style={{flexDirection: 'row'}}>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        flex: 1,
+                      }}>
+                      <View>
+                        <Text style={{fontFamily: fonts.secondary[600]}}>
+                          {JamTake}
+                        </Text>
+                        <Text>{item.jiOrigin}</Text>
+                      </View>
+                      <View
+                        style={{
+                          width: 50,
+                          marginHorizontal: 10,
+                          borderBottomWidth: 1,
+                          borderBottomColor: 'gray',
+                        }}>
+                        <Text
+                          style={{
+                            fontFamily: fonts.secondary[400],
+                            color: 'gray',
+                            textAlign: 'center',
+                          }}>
+                          {selisih}
+                        </Text>
+                      </View>
+                      <View>
+                        <Text style={{fontFamily: fonts.secondary[600]}}>
+                          {JamLand}
+                        </Text>
+                        <Text>{item.jiDestination}</Text>
+                      </View>
+                    </View>
+                    <Text
+                      style={{
+                        fontFamily: fonts.secondary[600],
+                        color: colors.secondary,
+                      }}>
+                      {' '}
+                      Rp. {new Intl.NumberFormat().format(item.sumPrice)}
+                      <Text
+                        style={{
+                          color: 'gray',
+                          fontFamily: fonts.secondary[400],
+                        }}>
+                        /pax
+                      </Text>
+                    </Text>
+                  </View>
                 </TouchableOpacity>
               );
             })}
@@ -382,6 +558,7 @@ export default function Pesawat({navigation, route}) {
                       console.log(item);
                       setModalVisible(false);
                       setOrigin(item.airport_code);
+                      setLocationOrigin(item.location_name);
                       setLabelOrigin(
                         item.airport_code + ' - ' + item.airport_name,
                       );
@@ -467,6 +644,7 @@ export default function Pesawat({navigation, route}) {
                       console.log(item);
                       setModalVisible2(false);
                       setDestination(item.airport_code);
+                      setLocationDestination(item.location_name);
                       setLabelDes(
                         item.airport_code + ' - ' + item.airport_name,
                       );

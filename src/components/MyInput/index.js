@@ -15,6 +15,7 @@ export default function MyInput({
   keyboardType,
   secureTextEntry,
   onFocus,
+  label2,
   styleInput,
   placeholder,
   multiline,

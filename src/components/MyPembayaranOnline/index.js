@@ -228,14 +228,15 @@ export default function MyPembayaranOnline() {
             img={{
               uri: 'https://ayokulakan.com/img/Icon-PPOB/Tiket-Bus.png',
             }}
+            onPress={() => navigation.navigate('Bus')}
           />
 
-          <IconPemayaran
+          {/* <IconPemayaran
             title="Tour"
             img={{
               uri: 'https://ayokulakan.com/img/Icon-PPOB/rote.png',
             }}
-          />
+          /> */}
         </View>
       </ScrollView>
     </View>

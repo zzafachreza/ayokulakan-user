@@ -17,32 +17,35 @@ export default function MyCarouser() {
     {
       id: 1,
       desc: 'Usaha Perikanan Budidaya Dan Hidroponik Ayokulakan',
-      image:
-        'https://ayokulakan.com/storage/img_berita/OhQpNJEzx8URQ1pKMRTV1w2vaWTgGKgOVj8ZxbZ5.png',
+      image: require('../../assets/ayo1.png'),
     },
     {
       id: 2,
       desc: 'Usaha Pertanian Ayokulakan',
-      image:
-        'https://ayokulakan.com/storage/img_berita/5p9CVZMZgokkZ337Ycg7qZB752YFS5fe04hjNWt8.png',
+      image: require('../../assets/ayo2.png'),
     },
     {
       id: 3,
       desc: 'Usaha Kebun Anggrek Ayokulakan',
-      image:
-        'https://ayokulakan.com/storage/img_berita/UNjF2qNbUuCPKd03NNrkM8IINVNh1AQAdF9cKKCb.png',
+      image: require('../../assets/ayo3.png'),
     },
     {
       id: 4,
       desc: 'Usaha Tanaman Buah Dalam Pot Ayokulakan',
-      image:
-        'https://ayokulakan.com/storage/img_berita/rpthcDb4zxD6zmLicrT5vJfzmDlcT6QGZJfzCk90.png',
+      image: require('../../assets/ayo4.png'),
     },
     {
       id: 5,
       desc: 'Usaha Perikanan Tangkap Ayokulakan',
-      image:
-        'https://ayokulakan.com/storage/img_berita/lg1X6eFqU6Xbs1kKuJ5zFf6QwMY5pxLdr732vjyE.png',
+      image: require('../../assets/ayo5.png'),
+    },
+    {
+      id: 6,
+      image: require('../../assets/ayoslide1.png'),
+    },
+    {
+      id: 7,
+      image: require('../../assets/ayoslide2.png'),
     },
   ]);
 
@@ -50,7 +53,7 @@ export default function MyCarouser() {
     return (
       <ImageBackground
         key={item.id}
-        source={{uri: item.image}}
+        source={item.image}
         style={{
           height: Math.round((windowWidth * 9) / 16),
         }}>

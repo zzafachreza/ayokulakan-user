@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Image} from 'react-native';
 import {fonts} from '../../utils';
 
 export default function TentangKaki() {
@@ -9,6 +9,14 @@ export default function TentangKaki() {
         flex: 1,
         padding: 10,
       }}>
+      <Image
+        source={require('../../assets/huruf.png')}
+        style={{
+          aspectRatio: 2,
+          alignSelf: 'center',
+        }}
+        resizeMode="contain"
+      />
       <Text style={styles.judul}>TENTANG KAKI LIMA</Text>
       <Text style={styles.isi}>
         merupakan tempat untuk pedagang memberikan informasi barang yang dijual,

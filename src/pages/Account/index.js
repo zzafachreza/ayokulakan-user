@@ -32,6 +32,8 @@ export default function Account({navigation}) {
   const [pesanEmail, setPesanEmail] = useState('');
   const [isLogin, setIsLogin] = useState(false);
 
+  const [showPassword, setShowPassword] = useState(false);
+
   const [infoPasword, setInfoPassword] = useState(false);
   const [pesanPassword, setPesanPassword] = useState('');
   const [token, setToken] = useState('');
@@ -578,31 +580,80 @@ export default function Account({navigation}) {
               </Text>
             )}
             <View style={{height: 20}} />
-            <MyInput
-              colorIcon={infoPasword ? 'red' : colors.primary}
-              styleInput={{
-                borderColor: infoPasword ? 'red' : colors.border,
-              }}
-              styleLabel={{
-                color: infoPasword ? 'red' : colors.primary,
-              }}
-              secureTextEntry
-              label="Password"
-              iconname="key-outline"
-              value={LoginGlobal.form.password}
-              onChangeText={(value) => {
-                onInputChange(value, 'password');
 
-                if (value.length <= 5) {
-                  console.log('password berbeda');
-                  setInfoPassword(true);
-                  setPesanPassword('Password minimal 6 karakter !');
-                } else {
-                  console.log('sesuai');
-                  setInfoPassword(false);
-                }
-              }}
-            />
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                paddingVertical: 5,
+              }}>
+              <Icon
+                type="ionicon"
+                name="key-outline"
+                color={infoPasword ? 'red' : colors.primary}
+                size={16}
+              />
+              <Text
+                style={{
+                  fontFamily: fonts.secondary[600],
+                  color: infoPasword ? 'red' : colors.primary,
+                  left: 10,
+                  fontSize: 16,
+                }}>
+                Password
+              </Text>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <TextInput
+                secureTextEntry={showPassword ? true : false}
+                value={LoginGlobal.form.password}
+                onChangeText={(value) => {
+                  onInputChange(value, 'password');
+
+                  if (value.length <= 5) {
+                    console.log('password berbeda');
+                    setInfoPassword(true);
+                    setPesanPassword('Password minimal 6 karakter !');
+                  } else {
+                    console.log('sesuai');
+                    setInfoPassword(false);
+                  }
+                }}
+                autoCapitalize="none"
+                style={{
+                  flex: 1,
+                  borderColor: infoPasword ? 'red' : colors.border,
+                  borderRadius: 10,
+                  borderWidth: 1,
+                  paddingLeft: 10,
+                  fontSize: 18,
+                  fontFamily: fonts.primary[400],
+                }}
+              />
+              <TouchableOpacity
+                onPress={() => {
+                  if (!showPassword) {
+                    setShowPassword(true);
+                  } else {
+                    setShowPassword(false);
+                  }
+                }}
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  position: 'absolute',
+                  right: 10,
+                  top: 10,
+                }}>
+                <Icon
+                  type="ionicon"
+                  name={!showPassword ? 'eye-off' : 'eye'}
+                  color={colors.primary}
+                  size={30}
+                />
+              </TouchableOpacity>
+            </View>
+
             {infoPasword && (
               <Text
                 style={{

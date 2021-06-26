@@ -21,8 +21,8 @@ export default function TentangKontak() {
   });
 
   const currentLocation = {
-    latitude: -8.365469,
-    longitude: 114.187938,
+    latitude: -8.367315663913635,
+    longitude: 114.18781130212977,
     latitudeDelta: 0.09,
     longitudeDelta: 0.035,
   };
@@ -42,13 +42,13 @@ export default function TentangKontak() {
           initialRegion={currentLocation}>
           <Marker
             coordinate={{
-              latitude: -8.365469,
-              longitude: 114.187938,
+              latitude: -8.367315663913635,
+              longitude: 114.18781130212977,
             }}>
-            <Image
+            {/* <Image
               source={require('../../assets/logo.png')}
               style={{height: 35, width: 35}}
-            />
+            /> */}
           </Marker>
           <View
             style={{

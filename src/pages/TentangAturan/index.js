@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
-import {fonts} from '../../utils';
+import {fonts, colors} from '../../utils';
 
 export default function TentangAturan() {
   return (
@@ -9,7 +9,10 @@ export default function TentangAturan() {
         flex: 1,
         padding: 10,
       }}>
-      <Text style={styles.judul}>ATURAN PENGGUNA AYOKULAKAN</Text>
+      <Text style={styles.judul}>
+        ATURAN PENGGUNA <Text style={{color: colors.secondary}}>AYO</Text>
+        <Text style={{color: colors.primary}}>KULAKAN</Text>
+      </Text>
       <Text style={styles.isi}>
         Kebijakan penggunaan yang dapat diterima ini adalah perjanjian antara
         Kami (operator situs web) dan Anda (User). Kebijakan ini menetapkan

@@ -80,6 +80,11 @@ import Checkout from './Checkout';
 import Travel from './Travel';
 import TravelDetail from './TravelDetail';
 import Pesawat from './Pesawat';
+import Bus from './Bus';
+import SewaCheckout from './SewaCheckout';
+import SewaBayar from './SewaBayar';
+import PesawatCheckout from './PesawatCheckout';
+import PesawatBayar from './PesawatBayar';
 
 export {
   Splash,
@@ -160,4 +165,8 @@ export {
   Travel,
   TravelDetail,
   Pesawat,
+  SewaCheckout,
+  SewaBayar,
+  PesawatCheckout,
+  PesawatBayar,
 };

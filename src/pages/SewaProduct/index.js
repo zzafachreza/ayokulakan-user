@@ -61,11 +61,11 @@ export default function SewaProduct({route}) {
 
   const renderItem = ({item}) => (
     <TouchableOpacity
-      //   onPress={() =>
-      //     navigation.navigate('Product', {
-      //       product: item,
-      //     })
-      //   }
+      onPress={() =>
+        navigation.navigate('SewaDetail', {
+          product: item,
+        })
+      }
       activeOpacity={1.0}>
       <View
         style={{
@@ -108,32 +108,6 @@ export default function SewaProduct({route}) {
               flex: 1,
             }}>
             <Text style={styles.subTitle}>{item.judul}</Text>
-          </View>
-
-          <View
-            style={{
-              marginTop: 10,
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}>
-              {/* bintang */}
-              <Bintang nilai={5} />
-            </View>
-            <Text
-              style={{
-                fontFamily: 'Montserrat-Light',
-                fontSize: 12,
-                left: 5,
-                color: '#000',
-              }}>
-              ( {10} )
-            </Text>
           </View>
         </View>
       </View>

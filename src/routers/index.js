@@ -88,6 +88,10 @@ import {
   Travel,
   TravelDetail,
   Pesawat,
+  SewaBayar,
+  SewaCheckout,
+  PesawatBayar,
+  PesawatCheckout,
 } from '../pages';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigator} from '../components';
@@ -96,6 +100,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {fonts} from '../utils/fonts';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import Alamat from '../pages/Alamat';
+import Bus from '../pages/Bus';
 
 const TabTop = createMaterialTopTabNavigator();
 
@@ -167,6 +172,59 @@ export default function Router() {
           headerShown: false,
         }}
       />
+
+      <Stack.Screen
+        name="SewaBayar"
+        component={SewaBayar}
+        options={{
+          headerTitle: 'Bayar Sewa',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#16A858',
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="SewaCheckout"
+        component={SewaCheckout}
+        options={{
+          headerTitle: 'Sewa Checkout',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#16A858',
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="PesawatBayar"
+        component={PesawatBayar}
+        options={{
+          headerTitle: 'Bayar Pesawat',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#16A858',
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="PesawatCheckout"
+        component={PesawatCheckout}
+        options={{
+          headerTitle: 'Pesawat Checkout',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#16A858',
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+
       <Stack.Screen
         name="Berita"
         component={Berita}
@@ -911,6 +969,19 @@ export default function Router() {
         component={Pesawat}
         options={{
           headerTitle: 'Pesawat',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0, // remove shadow on Android
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="Bus"
+        component={Bus}
+        options={{
+          headerTitle: 'Bus',
           headerTintColor: 'white',
           headerStyle: {
             backgroundColor: colors.primary,

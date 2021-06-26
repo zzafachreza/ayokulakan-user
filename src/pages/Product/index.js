@@ -540,8 +540,8 @@ export default function Produk({navigation, route}) {
               <TouchableOpacity
                 style={{
                   // flex: 1,
-                  width: 250,
-                  height: 90,
+                  // width: 250,
+                  height: 100,
                   backgroundColor: '#FFF',
                   borderRadius: 10,
                   borderColor: '#16A858',
@@ -580,7 +580,7 @@ export default function Produk({navigation, route}) {
                     style={{
                       fontFamily: 'Montserrat-Bold',
                       color: '#16A858',
-                      fontSize: 18,
+                      fontSize: 14,
                       textAlign: 'center',
                     }}>
                     {lapak.nama_lapak}
@@ -589,7 +589,7 @@ export default function Produk({navigation, route}) {
                     style={{
                       fontFamily: 'Montserrat-Light',
                       color: '#000',
-                      fontSize: 12,
+                      fontSize: 11,
                       // textAlign: 'center',
                     }}>
                     {lapak.deskripsi_lapak}

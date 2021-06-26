@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
-import {fonts} from '../../utils';
+import {fonts, colors} from '../../utils';
 
 export default function TentangKebijakan() {
   return (
@@ -9,7 +9,10 @@ export default function TentangKebijakan() {
         flex: 1,
         padding: 10,
       }}>
-      <Text style={styles.judul}>Kebijakan Privasi AYOKULAKAN</Text>
+      <Text style={styles.judul}>
+        Kebijakan Privasi <Text style={{color: colors.secondary}}>AYO</Text>
+        <Text style={{color: colors.primary}}>KULAKAN</Text>
+      </Text>
       <Text style={styles.isi}>
         Kebijakan Privasi ini menjelaskan bagaimana CV. AYOKULAKAN mengumpulkan,
         melindungi dan menggunakan informasi pribadi Anda (User) dan dapat

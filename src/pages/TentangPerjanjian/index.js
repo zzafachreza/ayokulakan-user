@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
-import {fonts} from '../../utils';
+import {fonts, colors} from '../../utils';
 
 export default function TentangPerjanjian() {
   return (
@@ -9,7 +9,10 @@ export default function TentangPerjanjian() {
         flex: 1,
         padding: 10,
       }}>
-      <Text style={styles.judul}>Perjanjian AYOKULAKAN</Text>
+      <Text style={styles.judul}>
+        Perjanjian <Text style={{color: colors.secondary}}>AYO</Text>
+        <Text style={{color: colors.primary}}>KULAKAN</Text>
+      </Text>
       <Text style={styles.isi}>
         Perjanjian ini adalah kesepakatan antara CV. AYOKULAKAN dan Anda (User).
         Perjanjian ini menetapkan pedoman umum, syarat dan ketentuan penggunaan

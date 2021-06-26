@@ -15,79 +15,26 @@ import {setForm, setLoading, setUsers, setCart} from '../../redux';
 import {showMessage} from 'react-native-flash-message';
 import {getData, storeData} from '../../utils/localStorage';
 import axios from 'axios';
-import {colors} from '../../utils';
+import {colors, fonts} from '../../utils';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 
 export default function SewaDetail({navigation, route}) {
   const UsersGlobal = useSelector((state) => state.reducerUsers);
   navigation.setOptions({title: 'Detail Sewa'});
-  const sewa = route.params.sewa;
+  const sewa = route.params;
 
-  let uri = '';
+  const [kirim, setKirim] = useState(sewa.product);
 
-  if (sewa.attachments[0]) {
-    uri = 'https://ayokulakan.com/storage/' + sewa.attachments[0].url;
-  } else {
-    uri = 'https://ayokulakan.com/img/no-images.png';
-  }
-
+  const [unit, setUnit] = useState(1);
   useEffect(() => {
     console.log(sewa);
+    setKirim({
+      ...kirim,
+      harga: kirim.harga_sewa.replace('Rp. ', '').replace(',', ''),
+      unit: unit,
+    });
   }, []);
-
-  const ListProduct = ({icon, title, desc}) => {
-    return (
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          padding: 5,
-        }}>
-        <View style={{backgroundColor: '#FFF', padding: 10}}>
-          <Icon type="ionicon" name={icon} color="gray" size={20} />
-        </View>
-        <View
-          style={{
-            flex: 2,
-            padding: 10,
-            borderBottomWidth: 1,
-            borderBottomColor: '#EBE9E9',
-          }}>
-          <Text
-            style={{
-              fontFamily: 'Montserrat-Regular',
-              color: 'gray',
-              fontWeight: 'bold',
-              fontSize: 18,
-            }}>
-            {title}
-          </Text>
-        </View>
-        <View
-          style={{
-            flex: 1,
-            padding: 10,
-            borderBottomWidth: 1,
-            borderBottomColor: '#EBE9E9',
-            alignItems: 'flex-end',
-            justifyContent: 'center',
-          }}>
-          <Text
-            style={{
-              color: '#16A858',
-              textAlign: 'right',
-              // fontWeight: 'bold',
-              fontSize: 18,
-              fontFamily: 'Montserrat-Regular',
-            }}>
-            {desc}
-          </Text>
-        </View>
-      </View>
-    );
-  };
 
   return (
     <SafeAreaView
@@ -102,12 +49,12 @@ export default function SewaDetail({navigation, route}) {
           <View>
             <View>
               <FastImage
-                source={{uri: uri}}
+                source={{uri: sewa.product.url}}
                 style={{
                   flex: 1,
-                  width: '100%',
+
                   resizeMode: 'cover',
-                  aspectRatio: 1,
+                  aspectRatio: 2,
                 }}
               />
             </View>
@@ -115,7 +62,6 @@ export default function SewaDetail({navigation, route}) {
               style={{
                 borderRadius: 10,
                 backgroundColor: '#FFF',
-                marginTop: -30,
                 padding: 10,
                 shadowColor: 'white',
                 shadowColor: '#000',
@@ -136,7 +82,7 @@ export default function SewaDetail({navigation, route}) {
                   fontSize: 20,
                   color: '#F8781D',
                 }}>
-                Rp. {new Intl.NumberFormat().format(sewa.harga_sewa)}
+                {sewa.product.harga_sewa}
                 {/* {token} */}
               </Text>
               <Text
@@ -146,7 +92,7 @@ export default function SewaDetail({navigation, route}) {
                   fontSize: 20,
                   color: '#000',
                 }}>
-                {sewa.judul}
+                {sewa.product.judul}
               </Text>
               <Text
                 style={{
@@ -155,56 +101,77 @@ export default function SewaDetail({navigation, route}) {
                   fontSize: 20,
                   color: '#000',
                 }}>
-                {sewa.keterangan}
+                {sewa.product.keterangan}
               </Text>
-            </View>
-
-            <View
-              style={{
-                backgroundColor: '#FFF',
-                marginTop: -10,
-                margin: 20,
-                // height: 600,
-              }}>
-              <View
-                style={{
-                  borderTopRightRadius: 10,
-                  borderTopLeftRadius: 10,
-                  backgroundColor: '#16A858',
-                }}>
-                <Text
-                  style={{
-                    fontFamily: 'Montserrat-SemiBold',
-                    color: '#FFF',
-                    fontSize: 20,
-                    padding: 10,
-                  }}>
-                  Informasi Produk
-                </Text>
-              </View>
-              <View
-                style={{
-                  borderBottomRightRadius: 10,
-                  borderBottomLeftRadius: 10,
-                  backgroundColor: '#FFF',
-                  elevation: 1,
-                  paddingBottom: 10,
-                }}>
-                <ListProduct
-                  icon="grid-outline"
-                  title="Kategori"
-                  desc={sewa.kategori.nama}
-                />
-
-                <ListProduct
-                  icon="file-tray-full-outline"
-                  title="Stok"
-                  desc={sewa.unit}
-                />
-              </View>
             </View>
           </View>
         </ScrollView>
+      </View>
+      <View
+        style={{
+          marginBottom: 20,
+          flexDirection: 'row',
+          paddingHorizontal: 10,
+          justifyContent: 'space-between',
+        }}>
+        <TouchableOpacity
+          onPress={() => {
+            if (unit == 1) {
+              showMessage({
+                message: 'Minimal harus sewa 1 barang',
+                type: 'danger',
+              });
+            } else {
+              setUnit(unit - 1);
+              setKirim({
+                ...kirim,
+                unit: unit - 1,
+              });
+            }
+          }}
+          style={{
+            flex: 1,
+            padding: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: colors.secondary,
+            borderRadius: 10,
+          }}>
+          <Icon type="ionicon" name="remove" color={colors.white} />
+        </TouchableOpacity>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderBottomWidth: 1,
+          }}>
+          <Text
+            style={{
+              fontFamily: fonts.secondary[600],
+              fontSize: 22,
+            }}>
+            {unit}
+          </Text>
+        </View>
+        <TouchableOpacity
+          onPress={() => {
+            setUnit(unit + 1);
+            setKirim({
+              ...kirim,
+              unit: unit + 1,
+            });
+          }}
+          style={{
+            flex: 1,
+            padding: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: colors.secondary,
+            borderRadius: 10,
+          }}>
+          <Icon type="ionicon" name="add" color={colors.white} />
+        </TouchableOpacity>
       </View>
       <View
         style={{
@@ -214,6 +181,10 @@ export default function SewaDetail({navigation, route}) {
           alignItems: 'center',
         }}>
         <TouchableOpacity
+          onPress={() => {
+            console.log('send data', kirim);
+            navigation.navigate('SewaCheckout', kirim);
+          }}
           activeOpacity={1}
           style={{
             flex: 2,
@@ -230,7 +201,7 @@ export default function SewaDetail({navigation, route}) {
               color: '#FFF',
               fontFamily: 'Montserrat-SemiBold',
             }}>
-            Sewa Sekarang
+            SEWA SEKARANG
           </Text>
         </TouchableOpacity>
       </View>
